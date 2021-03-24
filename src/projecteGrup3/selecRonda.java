@@ -106,8 +106,7 @@ public class selecRonda extends JFrame implements Runnable{
 							btnNewButton_1.setIcon(new ImageIcon(selecRonda.class.getResource("/img/mathemaPeque\u00F1a.png")));
 							i++;
 							break;
-						}
-						
+						}//case 2	
 						case 2: {
 							contador = 0;
 							btnNewButton_2.setIcon(new ImageIcon(selecRonda.class.getResource("/img/EnglishLanguage_Flag1_26107.png")));
