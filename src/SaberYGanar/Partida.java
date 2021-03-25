@@ -10,6 +10,8 @@ public class Partida {
 	private Jugador numsJugadors[];
 	private static Scanner sc = new Scanner(System.in);
 	private static String nombre;
+	conexionBD bd = new conexionBD();
+	
 	
 	public Partida(int numRondas, int numJugador) {
 		this.numRondas = numRondas;
@@ -35,5 +37,8 @@ public class Partida {
 		for (int i = 0; i < numsJugadors.length; i++) {
 			System.out.println("Puesto " + (i+1) + " para:" + numsJugadors[i].getNombre());
 		}
+	}
+	
+	public void ronda() {
 	}
 }

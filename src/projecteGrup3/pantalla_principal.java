@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SaberYGanar.conexionBD;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
@@ -59,7 +62,7 @@ public class pantalla_principal extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIgnoreRepaint(true);
 		lblNewLabel.setBackground(Color.DARK_GRAY);
-		lblNewLabel.setIcon(new ImageIcon(pantalla_principal.class.getResource("/img/índice.jpeg")));
+		lblNewLabel.setIcon(new ImageIcon(pantalla_principal.class.getResource("/img/\u251C\u043Dndice.jpeg")));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.VERTICAL;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
@@ -108,6 +111,11 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton = new JButton("Jugar partida");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				selecRonda ronda = new selecRonda(1);
+				ronda.setVisible(true);
+				
+				Thread hilo1 = new Thread(ronda);
+				hilo1.start();
 			}
 		});
 		btnNewButton.setBackground(Color.WHITE);
@@ -245,6 +253,7 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton_4 = new JButton("Opcions");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				conexionBD.conectar();
 			}
 		});
 		btnNewButton_4.setBackground(Color.WHITE);
@@ -280,7 +289,8 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton_5 = new JButton("Sortir");
 		btnNewButton_5.setBackground(Color.WHITE);
 		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
