@@ -59,7 +59,7 @@ public class pantalla_principal extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIgnoreRepaint(true);
 		lblNewLabel.setBackground(Color.DARK_GRAY);
-		lblNewLabel.setIcon(new ImageIcon(pantalla_principal.class.getResource("/img/índice.jpeg")));
+		lblNewLabel.setIcon(new ImageIcon(pantalla_principal.class.getResource("/img/\u251C\u043Dndice.jpeg")));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.fill = GridBagConstraints.VERTICAL;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
