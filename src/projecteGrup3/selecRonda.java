@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SaberYGanar.Partida;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -78,7 +81,7 @@ public class selecRonda extends JFrame implements Runnable{
 	}
 	
 	public void run() {
-		int vel = 1 *1000;
+		int vel = 1 *100;
 		
 		TimerTask tarea = null;
 		Timer tiempo = new Timer();
@@ -106,7 +109,7 @@ public class selecRonda extends JFrame implements Runnable{
 							btnNewButton_1.setIcon(new ImageIcon(selecRonda.class.getResource("/img/mathemaPeque\u00F1a.png")));
 							i++;
 							break;
-						}//case 2	
+						}
 						case 2: {
 							contador = 0;
 							btnNewButton_2.setIcon(new ImageIcon(selecRonda.class.getResource("/img/EnglishLanguage_Flag1_26107.png")));
@@ -121,15 +124,22 @@ public class selecRonda extends JFrame implements Runnable{
 						if(contador == 0) {
 							btnNewButton_2.setIcon(new ImageIcon(selecRonda.class.getResource("/img/EnglishLanguage_Flag1_26107.png")));
 							lblNewLabel_1.setText("Ingles");
+							contador = 2;
 						}else if(contador == 1) {
 							btnNewButton.setIcon(new ImageIcon(selecRonda.class.getResource("/img/abz.png")));
 							lblNewLabel_1.setText("Letras");
+							contador = 0; 
 						}else {
 							btnNewButton_1.setIcon(new ImageIcon(selecRonda.class.getResource("/img/mathematics_87612.png")));
 							lblNewLabel_1.setText("Matematicas");
+							contador = 1; 
 						}
-						Thread.sleep(3000);
+						Thread.sleep(1500);
+						Partida p = new Partida();
+						p.ronda(contador);
 						i = 0;
+						contador = (int) (Math.random()*3);
+						vueltas = (int) (Math.random()*5+4);
 						dispose();
 					}
 				} catch (Exception e) {

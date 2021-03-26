@@ -27,27 +27,10 @@ import javax.swing.ButtonGroup;
 public class pantalla_preguntes_ingles extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					pantalla_preguntes_ingles frame = new pantalla_preguntes_ingles();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_ingles() {
+	public pantalla_preguntes_ingles(String enunciado, String respuestas) {
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 364, 414);
@@ -80,7 +63,7 @@ public class pantalla_preguntes_ingles extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaIngles = new JTextPane();
-		txtpnPreguntaIngles.setText("pregunta d'anglés, tria la resposta correcte:\n\nWhich of the following European languages is classified as a \"language isolate\"?");
+		txtpnPreguntaIngles.setText("pregunta d'anglés, tria la resposta correcte:\n\n" + enunciado);
 		GridBagConstraints gbc_txtpnPreguntaIngles = new GridBagConstraints();
 		gbc_txtpnPreguntaIngles.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaIngles.fill = GridBagConstraints.BOTH;
@@ -113,22 +96,23 @@ public class pantalla_preguntes_ingles extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Basque");
+		String[] respuesta = respuestas.split("\\|");
+		JRadioButton rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
 		rdbtnNewRadioButton.setForeground(Color.WHITE);
 		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
 		panel.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Galician");
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton(respuesta[2]);
 		rdbtnNewRadioButton_1.setBackground(Color.DARK_GRAY);
 		rdbtnNewRadioButton_1.setForeground(Color.WHITE);
 		panel.add(rdbtnNewRadioButton_1);
 		
-		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("Maltese");
+		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(respuesta[3]);
 		rdbtnNewRadioButton_3.setBackground(Color.DARK_GRAY);
 		rdbtnNewRadioButton_3.setForeground(Color.WHITE);
 		panel.add(rdbtnNewRadioButton_3);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Hungarian");
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
 		rdbtnNewRadioButton_2.setForeground(Color.WHITE);
 		rdbtnNewRadioButton_2.setBackground(Color.DARK_GRAY);
 		panel.add(rdbtnNewRadioButton_2);
