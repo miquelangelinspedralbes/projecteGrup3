@@ -18,13 +18,9 @@ public class conexionBD {
     private static final String USUARIO = "root";
     private static final String CLAVE = "alumne";
     private static int contPreguntas = 1;
-
-    public static void main(String[] args) {
-    	conectar();
-    }
+    static Connection conexion = null;
     
     public static Connection conectar() {
-        Connection conexion = null;
         
         try {
             Class.forName(CONTROLADOR);
@@ -201,4 +197,20 @@ public class conexionBD {
             e.printStackTrace();
         } 
 	}
+    
+    public Connection obtenerConexion() {
+    	 try {
+             Class.forName(CONTROLADOR);
+             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
+             System.out.println("Conexión OK");
+         } catch (ClassNotFoundException e) {
+             System.out.println("Error al cargar el controlador");
+             e.printStackTrace();
+
+         } catch (SQLException e) {
+             System.out.println("Error en la conexión");
+             e.printStackTrace();
+         }
+    	 return conexion;
+    }
 }
