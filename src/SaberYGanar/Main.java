@@ -3,8 +3,8 @@ package SaberYGanar;
 import java.io.IOException;
 
 public class Main {
-	static Partida p = new Partida(2, 6);
+	static String[] nombres = {"Jose", "Marc", "Mike"};
 	public static void main(String[] args) {
-		p.ordenDeSalida();
+		Partida p = new Partida(2, 3, nombres);
 	}
 }

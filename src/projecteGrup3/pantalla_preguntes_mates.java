@@ -23,25 +23,9 @@ public class pantalla_preguntes_mates extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					pantalla_preguntes_mates frame = new pantalla_preguntes_mates();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_mates() {
+	public pantalla_preguntes_mates(String ecuacion) {
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 373);
@@ -73,7 +57,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaSobreMatematiques = new JTextPane();
-		txtpnPreguntaSobreMatematiques.setText("pregunta sobre matematiques, calcula el resultat del segúent problema:\n\n2+2 \n\n");
+		txtpnPreguntaSobreMatematiques.setText("pregunta sobre matematiques, calcula el resultat del segúent problema:\n\n " + ecuacion + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaSobreMatematiques = new GridBagConstraints();
 		gbc_txtpnPreguntaSobreMatematiques.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaSobreMatematiques.fill = GridBagConstraints.BOTH;

@@ -28,8 +28,8 @@ public class conexionBD {
             System.out.println("Conexión OK");
             try {
             	introducirMates(conexion, 15);
-//				introducirIngles(conexion);
-//				introducirLetras(conexion);
+				introducirIngles(conexion);
+				introducirLetras(conexion);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

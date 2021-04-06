@@ -23,25 +23,9 @@ public class pantalla_preguntes_lletres extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					pantalla_preguntes_lletres frame = new pantalla_preguntes_lletres();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_lletres() {
+	public pantalla_preguntes_lletres(String palabra) {
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 373);
@@ -73,7 +57,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaLletres = new JTextPane();
-		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\nma*ah*ev*\n\n");
+		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\nma" + palabra + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaLletres = new GridBagConstraints();
 		gbc_txtpnPreguntaLletres.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaLletres.fill = GridBagConstraints.BOTH;
