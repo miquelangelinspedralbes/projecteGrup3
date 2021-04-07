@@ -111,11 +111,11 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton = new JButton("Jugar partida");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				selecRonda ronda = new selecRonda(1);
-				ronda.setVisible(true);
+				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
+				pSelec.setVisible(true);
 				
-				Thread hilo1 = new Thread(ronda);
-				hilo1.start();
+//				Thread hilo1 = new Thread(ronda);
+//				hilo1.start();
 			}
 		});
 		btnNewButton.setBackground(Color.WHITE);
@@ -182,7 +182,7 @@ public class pantalla_principal extends JFrame {
 		gbc_lblNewLabel_2.gridy = 0;
 		panel_3.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JButton btnNewButton_2 = new JButton("Históric");
+		JButton btnNewButton_2 = new JButton("Historico");
 		btnNewButton_2.setBackground(Color.WHITE);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
