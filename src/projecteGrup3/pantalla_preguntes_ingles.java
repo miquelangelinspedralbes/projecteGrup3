@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SaberYGanar.Partida;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -23,6 +26,8 @@ import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_ingles extends JFrame {
 
@@ -124,6 +129,13 @@ public class pantalla_preguntes_ingles extends JFrame {
 		group.add(rdbtnNewRadioButton_3);
 		
 		JButton btnEnviarRespostaIngles = new JButton("Respon");
+		btnEnviarRespostaIngles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Partida p = new Partida();
+				p.pasarRondas();
+			}
+		});
 		btnEnviarRespostaIngles.setBackground(Color.WHITE);
 		btnEnviarRespostaIngles.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaIngles = new GridBagConstraints();

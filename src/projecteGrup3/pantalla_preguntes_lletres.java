@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SaberYGanar.Partida;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -17,6 +20,8 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_lletres extends JFrame {
 
@@ -57,7 +62,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaLletres = new JTextPane();
-		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\nma" + palabra + "\n\n");
+		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\n" + palabra + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaLletres = new GridBagConstraints();
 		gbc_txtpnPreguntaLletres.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaLletres.fill = GridBagConstraints.BOTH;
@@ -90,6 +95,13 @@ public class pantalla_preguntes_lletres extends JFrame {
 		contentPane.add(textAreaLletres, gbc_textAreaLletres);
 		
 		JButton btnEnviarRespostaLletres = new JButton("Respon");
+		btnEnviarRespostaLletres.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Partida p = new Partida();
+				p.pasarRondas();
+			}
+		});
 		btnEnviarRespostaLletres.setBackground(Color.WHITE);
 		btnEnviarRespostaLletres.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaLletres = new GridBagConstraints();

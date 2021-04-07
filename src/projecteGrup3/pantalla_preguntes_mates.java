@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import SaberYGanar.Partida;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -17,6 +20,8 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_mates extends JFrame {
 
@@ -90,6 +95,13 @@ public class pantalla_preguntes_mates extends JFrame {
 		contentPane.add(textAreaMates, gbc_textAreaMates);
 		
 		JButton btnEnviarRespostaMates = new JButton("Respon");
+		btnEnviarRespostaMates.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Partida p = new Partida();
+				p.pasarRondas();
+			}
+		});
 		btnEnviarRespostaMates.setBackground(Color.WHITE);
 		btnEnviarRespostaMates.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaMates = new GridBagConstraints();
