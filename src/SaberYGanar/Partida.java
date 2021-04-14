@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 public class Partida {
 	private static int numRondas;
 	static int dormir = 50000;
-	static int rondaActual = 1;
+	static int rondaActual = 0;
 	private Jugador numsJugadors[];
 	private static Scanner sc = new Scanner(System.in);
 	static conexionBD bd = new conexionBD();
@@ -28,10 +28,16 @@ public class Partida {
 	static Random random = new Random();
 	static int idUltimaPartida = 0;
 	public static Thread hilo1;
-	static int jugadoresJugado;
+	public static int jugadoresJugado = 1;
+	public static int numeroDeJugadores;
+	public static int numeroDeRondas;
 	
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores) {
+		System.out.println(numRondas);
+		System.out.println(numJugador);
 		PreparedStatement insert = null;
+		numeroDeJugadores = numJugador;
+		numeroDeRondas = numRondas;
 		try {
 			insert = conexion.prepareStatement("INSERT INTO PARTIDA VALUES ()");
 			insert.executeUpdate();
@@ -133,14 +139,28 @@ public class Partida {
 	}
 	
 	public void pasarRondas(){
-				selecRonda rondaElegir = new selecRonda(rondaActual);
-				rondaElegir.setVisible(true);
-				hilo1 = new Thread(rondaElegir);
-				hilo1.start();
-				jugadoresJugado++;
-				if (jugadoresJugado == numsJugadors.length) {
-					jugadoresJugado = 0;
-					rondaActual++;
-				}
+		selecRonda rondaElegir = new selecRonda();
+		rondaElegir.setVisible(true);
+		hilo1 = new Thread(rondaElegir);
+		hilo1.start();
+	}
+	
+	public void sumarPuntos(boolean respuesta) {
+		if(respuesta) {
+			System.out.println("Respuesta correcta");
+			
+		}else {
+			System.out.println("Respuesta incorrecta");
+		}
+		if (jugadoresJugado == numeroDeJugadores) {
+			jugadoresJugado = 0;
+			rondaActual++;
+		}
+		jugadoresJugado++;
+		if (rondaActual == numeroDeRondas) {
+			System.out.println("Partida acabada");
+		}
+		else
+			pasarRondas();
 	}
 }

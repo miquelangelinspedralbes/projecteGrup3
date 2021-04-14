@@ -8,9 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import SaberYGanar.Partida;
+import SaberYGanar.conexionBD;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextPane;
@@ -24,14 +27,23 @@ import javax.swing.JRadioButton;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
+
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Enumeration;
 import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_ingles extends JFrame {
 
 	private JPanel contentPane;
+	static conexionBD bd = new conexionBD();
+	static Connection conexion = bd.obtenerConexion();
 	/**
 	 * Create the frame.
 	 */
@@ -131,9 +143,39 @@ public class pantalla_preguntes_ingles extends JFrame {
 		JButton btnEnviarRespostaIngles = new JButton("Respon");
 		btnEnviarRespostaIngles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String respuesta = null;
+				
+				if(e.getSource()==btnEnviarRespostaIngles) { 
+					Enumeration<AbstractButton> allRadioButton=group.getElements();
+					while(allRadioButton.hasMoreElements()) {
+						JRadioButton temp=(JRadioButton)allRadioButton.nextElement();
+						if(temp.isSelected()) {
+							respuesta = temp.getText();
+							}
+						}
+					}
+				String correcto = null;
+				boolean bien = false;
+				Statement stmt;
+				try {
+					stmt = conexion.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT respuestaCorrecta FROM INGLES WHERE pregunta = '"+ enunciado + "'");
+					rs.next();
+					correcto = rs.getString(1);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println(respuesta);
+				System.out.println(correcto);
+				if(respuesta.equals(correcto))
+					bien = true;
+				else
+					bien = false;
+				
 				dispose();
 				Partida p = new Partida();
-				p.pasarRondas();
+				p.sumarPuntos(bien);
 			}
 		});
 		btnEnviarRespostaIngles.setBackground(Color.WHITE);

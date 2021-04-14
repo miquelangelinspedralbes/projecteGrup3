@@ -5,9 +5,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import SaberYGanar.Partida;
+import SaberYGanar.conexionBD;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -17,15 +19,24 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Enumeration;
 import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_mates extends JFrame {
 
 	private JPanel contentPane;
+	static conexionBD bd = new conexionBD();
+	static Connection conexion = bd.obtenerConexion();
+	private JTextField textField;
 
 	/**
 	 * Create the frame.
@@ -86,22 +97,44 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_lblrespostaMates.gridy = 4;
 		contentPane.add(lblrespostaMates, gbc_lblrespostaMates);
 		
-		JTextArea textAreaMates = new JTextArea();
-		GridBagConstraints gbc_textAreaMates = new GridBagConstraints();
-		gbc_textAreaMates.insets = new Insets(0, 0, 5, 0);
-		gbc_textAreaMates.fill = GridBagConstraints.BOTH;
-		gbc_textAreaMates.gridx = 0;
-		gbc_textAreaMates.gridy = 5;
-		contentPane.add(textAreaMates, gbc_textAreaMates);
-		
 		JButton btnEnviarRespostaMates = new JButton("Respon");
 		btnEnviarRespostaMates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String respuesta = textField.getText();
+				int resultado = Integer.parseInt(respuesta);
+				int correcto = 0;
+				boolean bien = false;
+				Statement stmt;
+				try {
+					stmt = conexion.createStatement();
+					ResultSet rs = stmt.executeQuery("SELECT respuesta FROM MATES WHERE equacion = '"+ ecuacion + "'");
+					rs.next();
+					correcto = rs.getInt(1);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println(respuesta);
+				System.out.println(correcto);
+				if(resultado == correcto)
+					bien = true;
+				else
+					bien = false;
+				
 				dispose();
 				Partida p = new Partida();
-				p.pasarRondas();
+				p.sumarPuntos(bien);
 			}
 		});
+		
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.fill = GridBagConstraints.BOTH;
+		gbc_textField.gridx = 0;
+		gbc_textField.gridy = 5;
+		contentPane.add(textField, gbc_textField);
+		textField.setColumns(10);
 		btnEnviarRespostaMates.setBackground(Color.WHITE);
 		btnEnviarRespostaMates.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaMates = new GridBagConstraints();

@@ -30,10 +30,12 @@ public class selecRonda extends JFrame implements Runnable{
 	static int i = 0;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
+	Partida p = new Partida();
+	
 	/**
 	 * Create the frame.
 	 */
-	public selecRonda(int numRonda) {
+	public selecRonda() {
 		setBackground(Color.DARK_GRAY);
 		this.setEnabled(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +70,7 @@ public class selecRonda extends JFrame implements Runnable{
 		btnNewButton_2.setBounds(298, 130, 176, 123);
 		contentPane.add(btnNewButton_2);
 		
-		lblNewLabel = new JLabel("Ronda numero: " + numRonda);
+		lblNewLabel = new JLabel("Selector de ronda");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -88,6 +90,8 @@ public class selecRonda extends JFrame implements Runnable{
 		
 		TimerTask tarea = null;
 		Timer tiempo = new Timer();
+		contador = (int) (Math.random()*3);
+		vueltas = (int) (Math.random()*5+4);
 		
 		tarea = new TimerTask() {
 			
@@ -139,8 +143,6 @@ public class selecRonda extends JFrame implements Runnable{
 						}
 						Thread.sleep(1500);
 						i = 0;
-						contador = (int) (Math.random()*3);
-						vueltas = (int) (Math.random()*5+4);
 						dispose();
 						Partida p = new Partida();
 						p.ronda(contador);
