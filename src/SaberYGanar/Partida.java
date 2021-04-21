@@ -8,10 +8,12 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-import projecteGrup3.pantalla_preguntes_ingles;
-import projecteGrup3.pantalla_preguntes_lletres;
-import projecteGrup3.pantalla_preguntes_mates;
-import projecteGrup3.selecRonda;
+import Vistas.pantalla_preguntes_ingles;
+import Vistas.pantalla_preguntes_lletres;
+import Vistas.pantalla_preguntes_mates;
+import Vistas.ranquing;
+import Vistas.ranquingFinal;
+import Vistas.selecRonda;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +22,7 @@ public class Partida {
 	private static int numRondas;
 	static int dormir = 50000;
 	static int rondaActual = 0;
-	private Jugador numsJugadors[];
+	private String numsJugadors[];
 	private static Scanner sc = new Scanner(System.in);
 	static conexionBD bd = new conexionBD();
 	static Connection conexion = bd.obtenerConexion();
@@ -31,6 +33,9 @@ public class Partida {
 	public static int jugadoresJugado = 1;
 	public static int numeroDeJugadores;
 	public static int numeroDeRondas;
+	public static int numRandom;
+	public static String nombre1, nombre2, nombre3, nombre4, nombre5, nombre6;
+	public static boolean aux = false;
 	
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores) {
 		System.out.println(numRondas);
@@ -51,7 +56,7 @@ public class Partida {
 		}
 		int i = 0;
 		this.numRondas = numRondas;
-		this.numsJugadors = new Jugador[numJugador];
+		this.numsJugadors = nombreJugadores;
 		while (alreadyUsedNumbers.size()<numsJugadors.length) {
 			
 			int randomNumber = random.nextInt(numsJugadors.length);
@@ -75,12 +80,25 @@ public class Partida {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				numsJugadors[randomNumber] = new Jugador(nombreJugadores[i]);
+				numsJugadors[randomNumber] = nombreJugadores[i];
 				i++;
 			}
 		}
 		for (int j = 0; j < numsJugadors.length; j++) {
-			System.out.println("Puesto:" + j + "para: " + numsJugadors[j].getNombre());
+			System.out.println("Puesto:" + j + " para: " + numsJugadors[j]);
+			if (j == 0) {
+				nombre1 = numsJugadors[j];
+			}else if(j == 1) {
+				nombre2 = numsJugadors[j];
+			}else if(j == 2) {
+				nombre3 = numsJugadors[j];
+			}else if(j == 3) {
+				nombre4 = numsJugadors[j];
+			}else if(j == 4) {
+				nombre5 = numsJugadors[j];
+			}else if(j == 5) {
+				nombre6 = numsJugadors[j];
+			}
 		}
 			pasarRondas();
 	}
@@ -90,7 +108,21 @@ public class Partida {
 	
 	
 	public void ronda(int pregunta) {
-		int cantIdMates, cantIdLetras, cantIdIngles, numRandom;
+		int cantIdMates, cantIdLetras, cantIdIngles;
+		String nombre = null;
+		if (jugadoresJugado == 1) {
+			nombre = nombre1;
+		}else if(jugadoresJugado == 2) {
+			nombre = nombre2;
+		}else if(jugadoresJugado == 3) {
+			nombre = nombre3;
+		}else if(jugadoresJugado == 4) {
+			nombre = nombre4;
+		}else if(jugadoresJugado == 5) {
+			nombre = nombre5;
+		}else if(jugadoresJugado == 6) {
+			nombre = nombre6;
+		}
 			try {
 				Statement stmt = conexion.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT COUNT(idIngles) FROM INGLES");
@@ -109,14 +141,14 @@ public class Partida {
 					numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
 					rs = stmt.executeQuery("SELECT palabraOculta FROM LETRAS WHERE idLetras = " + numRandom);
 					rs.next();
-					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(rs.getString(1));
+					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(rs.getString(1), nombre);
 					pL.setVisible(true);
 				}
 				else if(pregunta == 1) {
 					numRandom = (int) (Math.random()*cantIdMates);
 					rs = stmt.executeQuery("SELECT equacion FROM MATES WHERE idMates = " + numRandom);
 					rs.next();
-					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(rs.getString(1));
+					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(rs.getString(1), nombre);
 					pM.setVisible(true);
 				}
 				else{
@@ -126,7 +158,7 @@ public class Partida {
 					String enunciado = rs.getString(1);
 					rs = stmt.executeQuery("SELECT respuestas FROM INGLES WHERE idIngles = " + numRandom);
 					rs.next();
-					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(enunciado, rs.getString(1));
+					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(enunciado, rs.getString(1), nombre);
 					pI.setVisible(true);
 				}
 				
@@ -138,7 +170,7 @@ public class Partida {
 			}
 	}
 	
-	public void pasarRondas(){
+	public void pasarRondas(){		
 		selecRonda rondaElegir = new selecRonda();
 		rondaElegir.setVisible(true);
 		hilo1 = new Thread(rondaElegir);
@@ -146,21 +178,75 @@ public class Partida {
 	}
 	
 	public void sumarPuntos(boolean respuesta) {
-		if(respuesta) {
-			System.out.println("Respuesta correcta");
-			
-		}else {
-			System.out.println("Respuesta incorrecta");
+		int punto = 0;
+		if (respuesta) {
+			punto = 1;
+		}else
+			punto = 0;
+		String nombre = null;
+		if (jugadoresJugado == 1) {
+			nombre = nombre1;
+		}else if(jugadoresJugado == 2) {
+			nombre = nombre2;
+		}else if(jugadoresJugado == 3) {
+			nombre = nombre3;
+		}else if(jugadoresJugado == 4) {
+			nombre = nombre4;
+		}else if(jugadoresJugado == 5) {
+			nombre = nombre5;
+		}else if(jugadoresJugado == 6) {
+			nombre = nombre6;
 		}
+		PreparedStatement stmt = null;
+		if (!aux) {
+			try {
+				stmt = conexion.prepareStatement("INSERT INTO RONDAS VALUES (?,?)");
+				stmt.setInt(1, rondaActual+1);
+				stmt.setInt(2, idUltimaPartida);
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			aux = true;
+		}
+		stmt = null;
+		try {
+			stmt = conexion.prepareStatement("INSERT INTO JUEGAN VALUES (?,?,?,?,?,?)");
+			stmt.setInt(1, rondaActual+1);
+			stmt.setInt(2, idUltimaPartida);
+			stmt.setString(3, nombre);
+			stmt.setInt(4, numRandom);
+			stmt.setInt(5, punto);
+			stmt.setBoolean(6, respuesta);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if (jugadoresJugado == numeroDeJugadores) {
 			jugadoresJugado = 0;
 			rondaActual++;
-		}
-		jugadoresJugado++;
-		if (rondaActual == numeroDeRondas) {
-			System.out.println("Partida acabada");
+			aux = false;
+			ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6);
+			if(rondaActual != numeroDeRondas)
+			r.setVisible(true);
 		}
 		else
 			pasarRondas();
+		
+		if (rondaActual == numeroDeRondas) {
+			System.out.println("Partida acabada");
+			ranquingFinal rf = null;
+			try {
+				rf = new ranquingFinal();
+				rf.setVisible(true);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		jugadoresJugado++;
 	}
 }

@@ -14,7 +14,7 @@ public class Jugador {
 	}
 
 	public void setMarcador(int marcador) {
-		this.marcador = marcador;
+		this.marcador = this.marcador + marcador;
 	}
 
 	public String getNombre() {
