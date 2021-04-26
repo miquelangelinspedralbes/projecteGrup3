@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import SaberYGanar.conexionBD;
+import BDD.conexionBD;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;

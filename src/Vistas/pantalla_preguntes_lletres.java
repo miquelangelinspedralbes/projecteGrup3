@@ -1,14 +1,11 @@
 package Vistas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import SaberYGanar.Partida;
-import SaberYGanar.conexionBD;
+import BDD.Selects;
+import BDD.conexionBD;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -16,16 +13,12 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class pantalla_preguntes_lletres extends JFrame {
@@ -34,6 +27,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 	static conexionBD bd = new conexionBD();
 	static Connection conexion = bd.obtenerConexion();
 	private JTextField textField;
+	static Selects selec = new Selects();
 
 	/**
 	 * Create the frame.
@@ -98,20 +92,8 @@ public class pantalla_preguntes_lletres extends JFrame {
 		btnEnviarRespostaLletres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
-				String correcto = null;
-				boolean bien = false;
-				Statement stmt;
-				try {
-					stmt = conexion.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT palabraCompleta FROM LETRAS WHERE palabraOculta = '"+ palabra + "'");
-					rs.next();
-					correcto = rs.getString(1);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(respuesta);
-				System.out.println(correcto);
+				String correcto = selec.selecPalabraCompleta(palabra);
+
 				dispose();
 				if(respuesta.equals(correcto)) {
 					pregunta_correcte pc = new pregunta_correcte();

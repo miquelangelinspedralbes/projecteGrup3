@@ -401,6 +401,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 					} else{
 						nombreJugadores[i] = namejugador6.getText();
 					}
+					System.out.println(nombreJugadores[i]);
 				}
 				dispose();
 				Partida p = new Partida(ronda, contadorjugadors, nombreJugadores);	

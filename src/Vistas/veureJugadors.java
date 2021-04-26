@@ -1,37 +1,36 @@
 package Vistas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
-import SaberYGanar.conexionBD;
-
+import BDD.Selects;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class veureJugadors extends JFrame{
 	
 	private JPanel contentPane;
 	static List<JLabel> objJugadors = new ArrayList<JLabel>();;
 	JTextField jtf;
+	JPanel panel;
 	public static JPanel jpan;
 	public JLabel jlabels;
+	public JLabel jlabels2;
+	JTextArea display;
+	JScrollPane scroll;
+	Selects selec = new Selects();
 
-	static conexionBD bd = new conexionBD();
-	static Connection conex = bd.obtenerConexion();
 	public veureJugadors() {
-		
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(10, 11, 230, 300);
 		getContentPane().setBackground(Color.DARK_GRAY);
@@ -40,34 +39,22 @@ public class veureJugadors extends JFrame{
 		getContentPane().setLayout(null);
 		
 		
-		jpan.setBounds(10, 11, 200, 189);
+		jpan.setBounds(21, 11, 182, 189);
 		jpan.setOpaque(true);
 		jpan.setBackground(Color.DARK_GRAY);
+
+		ArrayList<String>nombre = selec.selectNombresJugadors();
 		
-		
-		Statement stmt;
-		int cont;
-		try {
-			stmt = conex.createStatement();
-			ResultSet set2 = stmt.executeQuery("SELECT COUNT(nombre) FROM JUGADORES");
-			set2.next();
-			cont = set2.getInt(1);
-			
-			ResultSet set = stmt.executeQuery("SELECT nombre FROM JUGADORES");
-			for(int i=0;set.next();i++) {
-				String nombre = set.getString(1);
-				jlabels = new JLabel("Nombre: " + nombre);
-				jlabels.setForeground(Color.WHITE);
+			for(int i=0; i < nombre.size(); i++) {
+				jlabels = new JLabel(nombre.get(i));
+				jlabels.setSize(182,25);
 				objJugadors.add(jlabels);
 			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
+		String nombres = null;
 		for (int i = 0; i < objJugadors.size(); i++) {
-			jpan.add(objJugadors.get(i));
+			nombres = nombres + objJugadors.get(i).getText() + "\n";
 		}
-		getContentPane().add(jpan);
-		
+		nombres = nombres.replaceAll("null", "");
 		
 		JButton btnTornar = new JButton("Tornar");
 		btnTornar.setBounds(117, 227, 93, 25);
@@ -79,5 +66,20 @@ public class veureJugadors extends JFrame{
 		    }
 		});
 		getContentPane().add(btnTornar);
+		
+		panel = new JPanel();
+		panel.setBounds(0, 0, 216, 216);
+		panel.setBackground(Color.DARK_GRAY);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		display = new JTextArea(6, 3);
+		System.out.println(nombres);
+		display.append(nombres);
+		display.setForeground(Color.BLACK);
+        display.setEditable(false);
+        scroll = new JScrollPane(display);
+        scroll.setBounds(2, 0, 214, 216);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        panel.add(scroll);
 	}
 }

@@ -1,36 +1,25 @@
 package Vistas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Panel;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.ScrollPane;
 
 public class pantalla_jugadors extends JFrame {
 	private JPanel contentPane;
-	/**
-	 * Create the frame.
-	 */
+
 	public pantalla_jugadors() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setResizable(false);
 		setBounds(100, 100, 344, 429);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
@@ -42,7 +31,7 @@ public class pantalla_jugadors extends JFrame {
 		JLabel lblJugadors = new JLabel("Jugadors");
 		lblJugadors.setForeground(Color.RED);
 		lblJugadors.setFont(new Font("Dialog", Font.BOLD, 19));
-		lblJugadors.setBounds(114, 11, 99, 25);
+		lblJugadors.setBounds(121, 11, 99, 25);
 		contentPane.add(lblJugadors);
 		
 		JButton btnTornar = new JButton("Tornar");

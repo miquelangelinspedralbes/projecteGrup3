@@ -272,14 +272,6 @@ public class ranquingFinal extends JFrame {
 			posicio6.setVisible(true);
 		}
 		
-		Timer timer = new Timer();
-
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				dispose();
-			}
-		}, 10000);	
 		
 	}
 }

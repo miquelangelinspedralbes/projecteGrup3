@@ -8,8 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import BDD.Selects;
+import BDD.conexionBD;
 import SaberYGanar.Partida;
-import SaberYGanar.conexionBD;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -34,8 +35,7 @@ import java.awt.event.ActionEvent;
 public class pantalla_preguntes_mates extends JFrame {
 
 	private JPanel contentPane;
-	static conexionBD bd = new conexionBD();
-	static Connection conexion = bd.obtenerConexion();
+	static Selects selec = new Selects();
 	private JTextField textField;
 
 	/**
@@ -102,20 +102,8 @@ public class pantalla_preguntes_mates extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
 				int resultado = Integer.parseInt(respuesta);
-				int correcto = 0;
-				boolean bien = false;
-				Statement stmt;
-				try {
-					stmt = conexion.createStatement();
-					ResultSet rs = stmt.executeQuery("SELECT respuesta FROM MATES WHERE equacion = '"+ ecuacion + "'");
-					rs.next();
-					correcto = rs.getInt(1);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				System.out.println(respuesta);
-				System.out.println(correcto);
+				int correcto = selec.respuestaMates(ecuacion);
+				
 				dispose();
 				if(resultado == correcto) {
 					pregunta_correcte pc = new pregunta_correcte();

@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import BDD.Selects;
+import BDD.conexionBD;
 import SaberYGanar.Partida;
-import SaberYGanar.conexionBD;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -37,6 +38,7 @@ public class ranquing extends JFrame {
 	public Integer totaljugadors;
 	static conexionBD bd = new conexionBD();
 	static Connection conexion = bd.obtenerConexion();
+	Selects selec = new Selects();
 	/**
 	 * Create the frame.
 	 */
@@ -248,27 +250,12 @@ public class ranquing extends JFrame {
 		JLabel puntosjug6 = new JLabel("100");
 		puntosjug6.setForeground(Color.GRAY);
 		posicio6.add(puntosjug6);
-		Statement stmt = null;
-		ResultSet rs;
-		try {
-			stmt = conexion.createStatement();
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		if (totaljugadors.equals(1) ) {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			
 			posicio2.setVisible(false);
 			posicio3.setVisible(false);
 			posicio4.setVisible(false);
@@ -277,24 +264,10 @@ public class ranquing extends JFrame {
 		}else if (totaljugadors.equals(2) ) {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre2 + "'");
-				rs.next();
-				puntosjug2.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
 			posicio3.setVisible(false);
 			posicio4.setVisible(false);
 			posicio5.setVisible(false);
@@ -302,193 +275,68 @@ public class ranquing extends JFrame {
 		}else if (totaljugadors.equals(3) ) {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre2 + "'");
-				rs.next();
-				puntosjug2.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre3 + "'");
-				rs.next();
-				puntosjug3.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
 			posicio4.setVisible(false);
 			posicio5.setVisible(false);
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(4) ) {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre2 + "'");
-				rs.next();
-				puntosjug2.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre3 + "'");
-				rs.next();
-				puntosjug3.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
 			posicio4.setVisible(true);
 			nomjug4.setText(nombre4);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre4 + "'");
-				rs.next();
-				puntosjug4.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
 			posicio5.setVisible(false);
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(5) ) {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre2 + "'");
-				rs.next();
-				puntosjug2.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre3 + "'");
-				rs.next();
-				puntosjug3.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
 			posicio4.setVisible(true);
 			nomjug4.setText(nombre4);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre4 + "'");
-				rs.next();
-				puntosjug4.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
 			posicio5.setVisible(true);
 			nomjug5.setText(nombre5);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre5 + "'");
-				rs.next();
-				puntosjug5.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
 			posicio6.setVisible(false);
+			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
 		}else {
 			posicio1.setVisible(true);
 			nomjug1.setText(nombre1);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre1 + "'");
-				rs.next();
-				puntosjug1.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre2 + "'");
-				rs.next();
-				puntosjug2.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre3 + "'");
-				rs.next();
-				puntosjug3.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
 			posicio4.setVisible(true);
 			nomjug4.setText(nombre4);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre4 + "'");
-				rs.next();
-				puntosjug4.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
 			posicio5.setVisible(true);
 			nomjug5.setText(nombre5);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre5 + "'");
-				rs.next();
-				puntosjug5.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
 			posicio6.setVisible(true);
 			nomjug6.setText(nombre6);
-			try {
-				rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idRonda = " + idUltimaPartida + " && nombreJugador = '" + nombre6 + "'");
-				rs.next();
-				puntosjug6.setText(String.valueOf(rs.getInt(1)));
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
 		}
 		
 		

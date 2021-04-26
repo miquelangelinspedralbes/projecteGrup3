@@ -1,13 +1,12 @@
 package SaberYGanar;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
+import BDD.Inserts;
+import BDD.Selects;
 import Vistas.pantalla_preguntes_ingles;
 import Vistas.pantalla_preguntes_lletres;
 import Vistas.pantalla_preguntes_mates;
@@ -15,17 +14,11 @@ import Vistas.ranquing;
 import Vistas.ranquingFinal;
 import Vistas.selecRonda;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 public class Partida {
-	private static int numRondas;
-	static int dormir = 50000;
+	static int numRondas;
 	static int rondaActual = 0;
-	private String numsJugadors[];
+	private ArrayList<String> numsJugadors = new ArrayList<String>();
 	private static Scanner sc = new Scanner(System.in);
-	static conexionBD bd = new conexionBD();
-	static Connection conexion = bd.obtenerConexion();
 	static ArrayList<Integer> alreadyUsedNumbers = new ArrayList<>();
 	static Random random = new Random();
 	static int idUltimaPartida = 0;
@@ -36,68 +29,45 @@ public class Partida {
 	public static int numRandom;
 	public static String nombre1, nombre2, nombre3, nombre4, nombre5, nombre6;
 	public static boolean aux = false;
+	public static Inserts inser = new Inserts();
+	public static Selects selec = new Selects();
 	
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores) {
-		System.out.println(numRondas);
-		System.out.println(numJugador);
-		PreparedStatement insert = null;
 		numeroDeJugadores = numJugador;
 		numeroDeRondas = numRondas;
-		try {
-			insert = conexion.prepareStatement("INSERT INTO PARTIDA VALUES ()");
-			insert.executeUpdate();
-			Statement stmt = conexion.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MAX(id) FROM PARTIDA");
-			rs.next();
-			idUltimaPartida = rs.getInt(1);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		inser.inserPartida();
+		idUltimaPartida = selec.selecMaxPartida();
+		
 		int i = 0;
 		this.numRondas = numRondas;
-		this.numsJugadors = nombreJugadores;
-		while (alreadyUsedNumbers.size()<numsJugadors.length) {
+		
+		while (alreadyUsedNumbers.size()<nombreJugadores.length) {
 			
-			int randomNumber = random.nextInt(numsJugadors.length);
+			int randomNumber = random.nextInt(nombreJugadores.length);
 			if (!alreadyUsedNumbers.contains(randomNumber)){
 				alreadyUsedNumbers.add(randomNumber);
-				try {
-					insert = conexion.prepareStatement("INSERT INTO JUGADORES VALUES (?)");
-					insert.setString(1, nombreJugadores[i]);
-					insert.executeUpdate();	
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					insert = conexion.prepareStatement("INSERT INTO PARTICIPAN VALUES (?, ?)");
-					insert.setString(1, nombreJugadores[i]);
-					insert.setInt(2, idUltimaPartida);
-					insert.executeUpdate();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				numsJugadors[randomNumber] = nombreJugadores[i];
+				inser.insertJugadors(nombreJugadores[i]);
+				inser.insertParticipan(nombreJugadores[i], idUltimaPartida);
+				
+				numsJugadors.add(nombreJugadores[randomNumber]);
 				i++;
 			}
 		}
-		for (int j = 0; j < numsJugadors.length; j++) {
-			System.out.println("Puesto:" + j + " para: " + numsJugadors[j]);
+		for (int j = 0; j < numsJugadors.size(); j++) {
+			System.out.println("Puesto:" + j + " para: " + numsJugadors.get(j));
 			if (j == 0) {
-				nombre1 = numsJugadors[j];
+				nombre1 = numsJugadors.get(j);
 			}else if(j == 1) {
-				nombre2 = numsJugadors[j];
+				nombre2 = numsJugadors.get(j);
 			}else if(j == 2) {
-				nombre3 = numsJugadors[j];
+				nombre3 = numsJugadors.get(j);
 			}else if(j == 3) {
-				nombre4 = numsJugadors[j];
+				nombre4 = numsJugadors.get(j);
 			}else if(j == 4) {
-				nombre5 = numsJugadors[j];
+				nombre5 = numsJugadors.get(j);
 			}else if(j == 5) {
-				nombre6 = numsJugadors[j];
+				nombre6 = numsJugadors.get(j);
 			}
 		}
 			pasarRondas();
@@ -123,51 +93,24 @@ public class Partida {
 		}else if(jugadoresJugado == 6) {
 			nombre = nombre6;
 		}
-			try {
-				Statement stmt = conexion.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT COUNT(idIngles) FROM INGLES");
-				rs.next();
-				cantIdIngles = rs.getInt(1);
-				
-				rs = stmt.executeQuery("SELECT COUNT(idLetras) FROM LETRAS");
-				rs.next();
-				cantIdLetras = rs.getInt(1);
-				
-				rs = stmt.executeQuery("SELECT COUNT(idMates) FROM MATES");
-				rs.next();
-				cantIdMates = rs.getInt(1);
-				
-				if (pregunta == 0) {				
-					numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
-					rs = stmt.executeQuery("SELECT palabraOculta FROM LETRAS WHERE idLetras = " + numRandom);
-					rs.next();
-					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(rs.getString(1), nombre);
-					pL.setVisible(true);
-				}
-				else if(pregunta == 1) {
-					numRandom = (int) (Math.random()*cantIdMates);
-					rs = stmt.executeQuery("SELECT equacion FROM MATES WHERE idMates = " + numRandom);
-					rs.next();
-					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(rs.getString(1), nombre);
-					pM.setVisible(true);
-				}
-				else{
-					numRandom = (int) (Math.random()*(cantIdIngles-(cantIdMates+1)+1)+(cantIdMates+1));
-					rs = stmt.executeQuery("SELECT pregunta FROM INGLES WHERE idIngles = " + numRandom);
-					rs.next();
-					String enunciado = rs.getString(1);
-					rs = stmt.executeQuery("SELECT respuestas FROM INGLES WHERE idIngles = " + numRandom);
-					rs.next();
-					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(enunciado, rs.getString(1), nombre);
-					pI.setVisible(true);
-				}
-				
-				rs.close();
-				stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		cantIdIngles = selec.selecCountIngles();
+		cantIdLetras = selec.selecCountLetras();
+		cantIdMates = selec.selecCountMates();
+		if (pregunta == 0) {				
+			numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
+			pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(selec.selecOcultaLetras(numRandom), nombre);
+			pL.setVisible(true);
+		}
+		else if(pregunta == 1) {
+			numRandom = (int) (Math.random()*cantIdMates);
+			pantalla_preguntes_mates pM = new pantalla_preguntes_mates(selec.selecEcuacioMates(numRandom), nombre);
+			pM.setVisible(true);
+		}
+		else{
+			numRandom = (int) (Math.random()*(cantIdIngles-(cantIdMates+1)+1)+(cantIdMates+1));
+			pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(selec.selecEnunciadoIngles(numRandom), selec.selecRespuestasIngles(numRandom), nombre);
+			pI.setVisible(true);
+		}
 	}
 	
 	public void pasarRondas(){		
@@ -197,41 +140,20 @@ public class Partida {
 		}else if(jugadoresJugado == 6) {
 			nombre = nombre6;
 		}
-		PreparedStatement stmt = null;
 		if (!aux) {
-			try {
-				stmt = conexion.prepareStatement("INSERT INTO RONDAS VALUES (?,?)");
-				stmt.setInt(1, rondaActual+1);
-				stmt.setInt(2, idUltimaPartida);
-				stmt.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			inser.insertRondas(rondaActual+1, idUltimaPartida);
 			aux = true;
 		}
-		stmt = null;
-		try {
-			stmt = conexion.prepareStatement("INSERT INTO JUEGAN VALUES (?,?,?,?,?,?)");
-			stmt.setInt(1, rondaActual+1);
-			stmt.setInt(2, idUltimaPartida);
-			stmt.setString(3, nombre);
-			stmt.setInt(4, numRandom);
-			stmt.setInt(5, punto);
-			stmt.setBoolean(6, respuesta);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		inser.insertJuegan(rondaActual+1, idUltimaPartida, nombre, numRandom, punto, respuesta);
 		
 		if (jugadoresJugado == numeroDeJugadores) {
 			jugadoresJugado = 0;
 			rondaActual++;
 			aux = false;
-			ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6);
-			if(rondaActual != numeroDeRondas)
-			r.setVisible(true);
+			if(rondaActual != numeroDeRondas) {
+				ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6);
+				r.setVisible(true);
+			}
 		}
 		else
 			pasarRondas();

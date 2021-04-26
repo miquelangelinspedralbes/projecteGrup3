@@ -1,4 +1,4 @@
-package SaberYGanar;
+package BDD;
 
 import java.io.BufferedReader;
 import java.io.File;
