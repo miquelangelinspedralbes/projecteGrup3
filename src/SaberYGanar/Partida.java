@@ -1,10 +1,18 @@
 package SaberYGanar;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -249,4 +257,50 @@ public class Partida {
 		}
 		jugadoresJugado++;
 	}
+	
+	public void actualitzarHistoric() throws SQLException, IOException {
+		Map<String, Integer> unsortedMap = getPuntuacions();
+		 
+		LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+		 
+		unsortedMap.entrySet().stream()
+		    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
+		    .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+		String puntuacionsstr = sortedMap.toString();
+		puntuacionsstr= puntuacionsstr.replace("{","");
+		puntuacionsstr= puntuacionsstr.replace("="," ");
+		puntuacionsstr= puntuacionsstr.replace(",","");
+		puntuacionsstr= puntuacionsstr.replace("}","");
+		File arxhistoric = new File("historic.txt");
+		if(!arxhistoric.exists()){    
+			arxhistoric.createNewFile();       
+        }
+		FileWriter fw = new FileWriter(arxhistoric,true);        
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(puntuacionsstr);
+        bw.close();
+        fw.close();
+	}
+	
+	public static Map<String, Integer> getPuntuacions() throws SQLException{
+		String nom;
+		int puntuacio;
+		Statement stmt = conexion.createStatement();
+		PreparedStatement stmt2 = null;
+		ResultSet set = stmt.executeQuery("SELECT nombre FROM JUGADORES");
+		stmt2 = conexion.prepareStatement("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = (?)");
+		Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
+		
+		for(int i=0;set.next();i++) {
+			nom =  set.getString(1);
+			stmt2.setString(1, nom);
+			puntuacio = stmt2.executeUpdate();
+			Puntuacions.put(nom, puntuacio);
+		}
+		
+        Puntuacions.put("Pepe", 2);
+		Puntuacions.put("Carlos", 3);
+		Puntuacions.put("Paco", 1);
+        return Puntuacions;
+    }
 }
