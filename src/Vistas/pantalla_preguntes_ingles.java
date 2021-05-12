@@ -125,21 +125,22 @@ public class pantalla_preguntes_ingles extends JFrame {
 		group.add(rdbtnNewRadioButton_1);
 		group.add(rdbtnNewRadioButton_2);
 		group.add(rdbtnNewRadioButton_3);
+			
 		
 		JButton btnEnviarRespostaIngles = new JButton("Respon");
 		btnEnviarRespostaIngles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = null;
-				
+					
 				if(e.getSource()==btnEnviarRespostaIngles) { 
 					Enumeration<AbstractButton> allRadioButton=group.getElements();
 					while(allRadioButton.hasMoreElements()) {
 						JRadioButton temp=(JRadioButton)allRadioButton.nextElement();
 						if(temp.isSelected()) {
 							respuesta = temp.getText();
-							}
 						}
 					}
+				}
 				String correcto = selec.selecRespuestasCorrectaIngles(enunciado);
 				
 				dispose();
@@ -151,6 +152,7 @@ public class pantalla_preguntes_ingles extends JFrame {
 					pi.setVisible(true);
 				}
 			}
+			
 		});
 		btnEnviarRespostaIngles.setBackground(Color.WHITE);
 		btnEnviarRespostaIngles.setForeground(Color.RED);
@@ -159,6 +161,19 @@ public class pantalla_preguntes_ingles extends JFrame {
 		gbc_btnEnviarRespostaIngles.gridx = 0;
 		gbc_btnEnviarRespostaIngles.gridy = 6;
 		contentPane.add(btnEnviarRespostaIngles, gbc_btnEnviarRespostaIngles);
+		
+//		if(nombre.contains("CPU")) {
+//			dispose();
+//			int numRandom = (int) (Math.random()*2);
+//			if(numRandom == 0) {
+//				String correcto = selec.selecRespuestasCorrectaIngles(enunciado);
+//				pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
+//				pi.setVisible(true);
+//			}else {
+//				pregunta_correcte pc = new pregunta_correcte();
+//				pc.setVisible(true);
+//			}
+//		}
 	}
 
 }

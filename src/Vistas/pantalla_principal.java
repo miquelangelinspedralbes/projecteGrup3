@@ -113,9 +113,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
 				pSelec.setVisible(true);
-				
-//				Thread hilo1 = new Thread(ronda);
-//				hilo1.start();
+
 			}
 		});
 		btnNewButton.setBackground(Color.WHITE);
@@ -186,6 +184,8 @@ public class pantalla_principal extends JFrame {
 		btnNewButton_2.setBackground(Color.WHITE);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				historic h = new historic();
+				h.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();

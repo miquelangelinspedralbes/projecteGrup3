@@ -1,36 +1,34 @@
 package Vistas;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import SaberYGanar.Partida;
-
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JScrollPane;
+import java.util.Vector;
+
 import javax.swing.ImageIcon;
-import java.awt.CardLayout;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Component;
-import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import java.awt.Insets;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+
+import SaberYGanar.Partida;
 
 public class pantalla_jugar_selecciojugadors extends JFrame implements ActionListener {
 
@@ -39,6 +37,9 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	String[] tipuspartida = {"Partida Curta", "Partida Normal", "Partida Llarga"};
 	String partida = "Partida Curta";
 	Integer contadorjugadors = 1;
+	Integer contadorCPU = 0;
+	Vector CPUclick = new Vector(6);//vector de boolean para comprovar que no se añadan por accidente jugadores de la cpu
+	
 	
 	JPanel jugador2;
 	JPanel jugador3;
@@ -52,12 +53,31 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	private JTextField namejugador4;
 	private JTextField namejugador5;
 	private JTextField namejugador6;
+	
+	JButton btnJugador1;
+	JButton btnJugador2;
+	JButton btnJugador3;
+	JButton btnJugador4;
+	JButton btnJugador5;
+	JButton btnJugador6;
+	
+	JButton btnCPU1;
+	JButton btnCPU2;
+	JButton btnCPU3;
+	JButton btnCPU4;
+	JButton btnCPU5;
+	JButton btnCPU6;
+
 	/**
 	 * Create the frame.
 	 */
-	public pantalla_jugar_selecciojugadors() {
+	public pantalla_jugar_selecciojugadors(){
+		for (int i = 0; i>6; i++) {
+			CPUclick.add(i, 0);
+		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 440, 636);
+		setBounds(100, 100, 453, 647);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -151,7 +171,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		body.setBackground(Color.DARK_GRAY);
 		contentPane.add(body, BorderLayout.CENTER);
 		GridBagLayout gbl_body = new GridBagLayout();
-		gbl_body.columnWidths = new int[]{54, 324, 0};
+		gbl_body.columnWidths = new int[]{54, 339, 0};
 		gbl_body.rowHeights = new int[]{46, 46, 46, 48, 50, 44, 0};
 		gbl_body.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_body.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -160,16 +180,16 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		JPanel jugador1 = new JPanel();
 		jugador1.setBackground(Color.WHITE);
 		GridBagConstraints gbc_jugador1 = new GridBagConstraints();
-		gbc_jugador1.fill = GridBagConstraints.BOTH;
+		gbc_jugador1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_jugador1.insets = new Insets(0, 0, 5, 0);
 		gbc_jugador1.gridx = 1;
 		gbc_jugador1.gridy = 0;
 		body.add(jugador1, gbc_jugador1);
 		GridBagLayout gbl_jugador1 = new GridBagLayout();
-		gbl_jugador1.columnWidths = new int[]{0, 241, 0};
+		gbl_jugador1.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador1.rowHeights = new int[]{40, 0};
-		gbl_jugador1.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_jugador1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador1.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_jugador1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador1.setLayout(gbl_jugador1);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
@@ -185,11 +205,49 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador1.setText("enter name");
 		namejugador1.setToolTipText("player name");
 		GridBagConstraints gbc_txtEnterName = new GridBagConstraints();
+		gbc_txtEnterName.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName.gridx = 1;
 		gbc_txtEnterName.gridy = 0;
 		jugador1.add(namejugador1, gbc_txtEnterName);
 		namejugador1.setColumns(10);
+		
+		JPanel panelj1 = new JPanel();
+		panelj1.setBackground(Color.WHITE);
+		panelj1.setForeground(Color.WHITE);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 2;
+		gbc_panel.gridy = 0;
+		jugador1.add(panelj1, gbc_panel);
+		panelj1.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(35dlu;default)"),},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador1 = new JButton("Jugador");
+		btnJugador1.setBackground(Color.LIGHT_GRAY);
+		btnJugador1.setForeground(Color.RED);
+		btnJugador1.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador1.getName());
+			}
+		});
+		panelj1.add(btnJugador1, "2, 1, fill, center");
+		
+		JButton btnCPU1 = new JButton("CPU");
+		btnCPU1.setForeground(Color.WHITE);
+		btnCPU1.setBackground(Color.GRAY);
+		btnCPU1.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU1.getName());
+			}
+		});
+		panelj1.add(btnCPU1, "2, 2, fill, top");
 		
 		JPanel jugador2 = new JPanel();
 		jugador2.setBackground(Color.WHITE);
@@ -201,10 +259,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador2.gridy = 1;
 		body.add(jugador2, gbc_jugador2);
 		GridBagLayout gbl_jugador2 = new GridBagLayout();
-		gbl_jugador2.columnWidths = new int[]{0, 241, 0};
+		gbl_jugador2.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador2.rowHeights = new int[]{41, 0};
-		gbl_jugador2.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_jugador2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador2.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_jugador2.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador2.setLayout(gbl_jugador2);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
@@ -220,11 +278,48 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador2.setToolTipText("player name");
 		namejugador2.setText("enter name");
 		GridBagConstraints gbc_txtEnterName_1 = new GridBagConstraints();
+		gbc_txtEnterName_1.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName_1.gridx = 1;
 		gbc_txtEnterName_1.gridy = 0;
 		jugador2.add(namejugador2, gbc_txtEnterName_1);
 		namejugador2.setColumns(10);
+		
+		JPanel panelj2 = new JPanel();
+		panelj2.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_1.gridx = 2;
+		gbc_panel_1.gridy = 0;
+		jugador2.add(panelj2, gbc_panel_1);
+		panelj2.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador2 = new JButton("Jugador");
+		btnJugador2.setForeground(Color.RED);
+		btnJugador2.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador2.setBackground(Color.LIGHT_GRAY);
+		btnJugador2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador2.getName());
+			}
+		});
+		panelj2.add(btnJugador2, "2, 1, fill, center");
+		
+		JButton btnCPU2 = new JButton("CPU");
+		btnCPU2.setForeground(Color.WHITE);
+		btnCPU2.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU2.setBackground(Color.GRAY);
+		btnCPU2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU2.getName());
+			}
+		});
+		panelj2.add(btnCPU2, "2, 2, fill, top");
 		
 		JPanel jugador3 = new JPanel();
 		jugador3.setBackground(Color.WHITE);
@@ -236,10 +331,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador3.gridy = 2;
 		body.add(jugador3, gbc_jugador3);
 		GridBagLayout gbl_jugador3 = new GridBagLayout();
-		gbl_jugador3.columnWidths = new int[]{0, 0, 0};
+		gbl_jugador3.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador3.rowHeights = new int[]{40, 0};
-		gbl_jugador3.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_jugador3.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador3.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_jugador3.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador3.setLayout(gbl_jugador3);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
@@ -255,11 +350,48 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador3.setText("enter name");
 		namejugador3.setToolTipText("player name");
 		GridBagConstraints gbc_txtEnterName_2 = new GridBagConstraints();
+		gbc_txtEnterName_2.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName_2.gridx = 1;
 		gbc_txtEnterName_2.gridy = 0;
 		jugador3.add(namejugador3, gbc_txtEnterName_2);
 		namejugador3.setColumns(10);
+		
+		JPanel panelj3 = new JPanel();
+		panelj3.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 2;
+		gbc_panel_2.gridy = 0;
+		jugador3.add(panelj3, gbc_panel_2);
+		panelj3.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador3 = new JButton("Jugador");
+		btnJugador3.setForeground(Color.RED);
+		btnJugador3.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador3.setBackground(Color.LIGHT_GRAY);
+		btnJugador3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador3.getName());
+			}
+		});
+		panelj3.add(btnJugador3, "2, 1, fill, center");
+		
+		JButton btnCPU3 = new JButton("CPU");
+		btnCPU3.setForeground(Color.WHITE);
+		btnCPU3.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU3.setBackground(Color.GRAY);
+		btnCPU3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU3.getName());
+			}
+		});
+		panelj3.add(btnCPU3, "2, 2, fill, top");
 		
 		JPanel jugador4 = new JPanel();
 		jugador4.setBackground(Color.WHITE);
@@ -271,10 +403,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador4.gridy = 3;
 		body.add(jugador4, gbc_jugador4);
 		GridBagLayout gbl_jugador4 = new GridBagLayout();
-		gbl_jugador4.columnWidths = new int[]{0, 0, 0};
+		gbl_jugador4.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador4.rowHeights = new int[]{43, 0};
-		gbl_jugador4.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_jugador4.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador4.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_jugador4.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador4.setLayout(gbl_jugador4);
 		
 		JLabel lblNewLabel_6 = new JLabel("");
@@ -290,11 +422,48 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador4.setToolTipText("player name");
 		namejugador4.setText("enter name");
 		GridBagConstraints gbc_txtEnterName_3 = new GridBagConstraints();
+		gbc_txtEnterName_3.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName_3.gridx = 1;
 		gbc_txtEnterName_3.gridy = 0;
 		jugador4.add(namejugador4, gbc_txtEnterName_3);
 		namejugador4.setColumns(10);
+		
+		JPanel panelj4 = new JPanel();
+		panelj4.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_3.gridx = 2;
+		gbc_panel_3.gridy = 0;
+		jugador4.add(panelj4, gbc_panel_3);
+		panelj4.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador4 = new JButton("Jugador");
+		btnJugador4.setForeground(Color.RED);
+		btnJugador4.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador4.setBackground(Color.LIGHT_GRAY);
+		btnJugador4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador4.getName());
+			}
+		});
+		panelj4.add(btnJugador4, "2, 1, fill, center");
+		
+		JButton btnCPU4 = new JButton("CPU");
+		btnCPU4.setForeground(Color.WHITE);
+		btnCPU4.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU4.setBackground(Color.GRAY);
+		btnCPU4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU4.getName());
+			}
+		});
+		panelj4.add(btnCPU4, "2, 2, fill, top");
 		
 		JPanel jugador5 = new JPanel();
 		jugador5.setBackground(Color.WHITE);
@@ -306,10 +475,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador5.gridy = 4;
 		body.add(jugador5, gbc_jugador5);
 		GridBagLayout gbl_jugador5 = new GridBagLayout();
-		gbl_jugador5.columnWidths = new int[]{0, 0, 0};
+		gbl_jugador5.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador5.rowHeights = new int[]{46, 0};
-		gbl_jugador5.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_jugador5.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador5.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_jugador5.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador5.setLayout(gbl_jugador5);
 		
 		JLabel lblNewLabel_7 = new JLabel("");
@@ -325,11 +494,48 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador5.setText("enter name");
 		namejugador5.setToolTipText("player name");
 		GridBagConstraints gbc_txtEnterName_4 = new GridBagConstraints();
+		gbc_txtEnterName_4.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName_4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName_4.gridx = 1;
 		gbc_txtEnterName_4.gridy = 0;
 		jugador5.add(namejugador5, gbc_txtEnterName_4);
 		namejugador5.setColumns(10);
+		
+		JPanel panelj5 = new JPanel();
+		panelj5.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_4.gridx = 2;
+		gbc_panel_4.gridy = 0;
+		jugador5.add(panelj5, gbc_panel_4);
+		panelj5.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador5 = new JButton("Jugador");
+		btnJugador5.setForeground(Color.RED);
+		btnJugador5.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador5.setBackground(Color.LIGHT_GRAY);
+		btnJugador5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador5.getName());
+			}
+		});
+		panelj5.add(btnJugador5, "2, 1, fill, center");
+		
+		JButton btnCPU5 = new JButton("CPU");
+		btnCPU5.setForeground(Color.WHITE);
+		btnCPU5.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU5.setBackground(Color.GRAY);
+		btnCPU5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU5.getName());
+			}
+		});
+		panelj5.add(btnCPU5, "2, 2, fill, top");
 		
 		JPanel jugador6 = new JPanel();
 		jugador6.setBackground(Color.WHITE);
@@ -340,10 +546,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador6.gridy = 5;
 		body.add(jugador6, gbc_jugador6);
 		GridBagLayout gbl_jugador6 = new GridBagLayout();
-		gbl_jugador6.columnWidths = new int[]{0, 0, 0};
+		gbl_jugador6.columnWidths = new int[]{0, 181, 75, 0};
 		gbl_jugador6.rowHeights = new int[]{47, 0};
-		gbl_jugador6.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_jugador6.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_jugador6.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_jugador6.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		jugador6.setLayout(gbl_jugador6);
 		
 		JLabel lblNewLabel_8 = new JLabel("");
@@ -359,11 +565,48 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador6.setText("enter name");
 		namejugador6.setToolTipText("player name");
 		GridBagConstraints gbc_txtEnterName_5 = new GridBagConstraints();
+		gbc_txtEnterName_5.insets = new Insets(0, 0, 0, 5);
 		gbc_txtEnterName_5.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEnterName_5.gridx = 1;
 		gbc_txtEnterName_5.gridy = 0;
 		jugador6.add(namejugador6, gbc_txtEnterName_5);
 		namejugador6.setColumns(10);
+		
+		JPanel panelj6 = new JPanel();
+		panelj6.setBackground(Color.WHITE);
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_5.gridx = 2;
+		gbc_panel_5.gridy = 0;
+		jugador6.add(panelj6, gbc_panel_5);
+		panelj6.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("max(20dlu;default)"),
+				RowSpec.decode("max(18dlu;default)"),}));
+		
+		JButton btnJugador6 = new JButton("Jugador");
+		btnJugador6.setForeground(Color.RED);
+		btnJugador6.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnJugador6.setBackground(Color.LIGHT_GRAY);
+		btnJugador6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajejugador(btnJugador6.getName());
+			}
+		});
+		panelj6.add(btnJugador6, "2, 1, fill, center");
+		
+		JButton btnCPU6 = new JButton("CPU");
+		btnCPU6.setForeground(Color.WHITE);
+		btnCPU6.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnCPU6.setBackground(Color.GRAY);
+		btnCPU6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				personajeCPU(btnCPU6.getName());
+			}
+		});
+		panelj6.add(btnCPU6, "2, 2, fill, top");
 		
 		JPanel footer = new JPanel();
 		footer.setBackground(Color.DARK_GRAY);
@@ -371,11 +614,11 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		GridBagLayout gbl_footer = new GridBagLayout();
 		gbl_footer.columnWidths = new int[]{439, 0};
 		gbl_footer.rowHeights = new int[]{43, 0};
-		gbl_footer.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_footer.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_footer.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		footer.setLayout(gbl_footer);
 		
-		JButton jugarbtn = new JButton("¡ a jugar !");
+		JButton jugarbtn = new JButton("A jugar!");
 		jugarbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ronda = 3;
@@ -401,10 +644,9 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 					} else{
 						nombreJugadores[i] = namejugador6.getText();
 					}
-					System.out.println(nombreJugadores[i]);
 				}
 				dispose();
-				Partida p = new Partida(ronda, contadorjugadors, nombreJugadores);	
+				Partida p = new Partida(ronda, contadorjugadors, nombreJugadores, contadorCPU);	
 			}
 		});
 		jugarbtn.setForeground(Color.RED);
@@ -468,6 +710,124 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 			}
 		});
 		buttons.add(restabtn);
+	}
+
+	public void personajejugador(String btnname) {
+		if (btnname.equals("btnjugador1") && CPUclick.elementAt(0).equals(1)) {
+			contadorCPU--;
+			namejugador1.setText("enter name");
+			btnJugador1.setForeground(Color.RED);
+			btnJugador1.setBackground(Color.LIGHT_GRAY);
+			btnCPU1.setForeground(Color.WHITE);
+			btnCPU1.setBackground(Color.GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnjugador2") && CPUclick.elementAt(1).equals(1)) {
+			contadorCPU--;
+			namejugador2.setText("enter name");
+			btnJugador2.setForeground(Color.RED);
+			btnJugador2.setBackground(Color.LIGHT_GRAY);
+			btnCPU2.setForeground(Color.WHITE);
+			btnCPU2.setBackground(Color.GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnjugador3") && CPUclick.elementAt(2).equals(1)) {
+			contadorCPU--;
+			namejugador3.setText("enter name");
+			btnJugador3.setForeground(Color.RED);
+			btnJugador3.setBackground(Color.LIGHT_GRAY);
+			btnCPU3.setForeground(Color.WHITE);
+			btnCPU3.setBackground(Color.GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnjugador4") && CPUclick.elementAt(3).equals(1)) {
+			contadorCPU--;
+			namejugador4.setText("enter name");
+			btnJugador4.setForeground(Color.RED);
+			btnJugador4.setBackground(Color.LIGHT_GRAY);
+			btnCPU4.setForeground(Color.WHITE);
+			btnCPU4.setBackground(Color.GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnjugador5") && CPUclick.elementAt(4).equals(1)) {
+			contadorCPU--;
+			namejugador5.setText("enter name");
+			btnJugador5.setForeground(Color.RED);
+			btnJugador5.setBackground(Color.LIGHT_GRAY);
+			btnCPU5.setForeground(Color.WHITE);
+			btnCPU5.setBackground(Color.GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnjugador6") && CPUclick.elementAt(5).equals(1)) {
+			contadorCPU--;
+			namejugador6.setText("enter name");			
+			btnJugador6.setForeground(Color.RED);
+			btnJugador6.setBackground(Color.LIGHT_GRAY);
+			btnCPU6.setForeground(Color.WHITE);
+			btnCPU6.setBackground(Color.GRAY);
+			repaint();
+			
+		}
+		
+	}
+	
+	
+	public void personajeCPU(String btnname) {
+		if (btnname.equals("btnCPU1") && CPUclick.elementAt(0).equals(0)) {
+			contadorCPU++;
+			namejugador1.setText("CPU" + contadorCPU.toString());			
+			btnJugador1.setForeground(Color.WHITE);
+			btnJugador1.setBackground(Color.GRAY);
+			btnCPU1.setForeground(Color.RED);
+			btnCPU1.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnCPU2") && CPUclick.elementAt(1).equals(0)) {
+			contadorCPU++;
+			namejugador2.setText("CPU" + contadorCPU.toString());			
+			btnJugador2.setForeground(Color.WHITE);
+			btnJugador2.setBackground(Color.GRAY);
+			btnCPU2.setForeground(Color.RED);
+			btnCPU2.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnCPU3") && CPUclick.elementAt(2).equals(0)) {
+			contadorCPU++;
+			namejugador3.setText("CPU" + contadorCPU.toString());			
+			btnJugador3.setForeground(Color.WHITE);
+			btnJugador3.setBackground(Color.GRAY);
+			btnCPU3.setForeground(Color.RED);
+			btnCPU3.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnCPU4") && CPUclick.elementAt(3).equals(0)) {
+			contadorCPU++;
+			namejugador4.setText("CPU" + contadorCPU.toString());			
+			btnJugador4.setForeground(Color.WHITE);
+			btnJugador4.setBackground(Color.GRAY);
+			btnCPU4.setForeground(Color.RED);
+			btnCPU4.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnCPU5") && CPUclick.elementAt(4).equals(0)) {
+			contadorCPU++;
+			namejugador5.setText("CPU" + contadorCPU.toString());			
+			btnJugador5.setForeground(Color.WHITE);
+			btnJugador5.setBackground(Color.GRAY);
+			btnCPU5.setForeground(Color.RED);
+			btnCPU5.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}else if (btnname.equals("btnCPU6") && CPUclick.elementAt(5).equals(0)) {
+			contadorCPU++;
+			namejugador6.setText("CPU" + contadorCPU.toString());			
+			btnJugador6.setForeground(Color.WHITE);
+			btnJugador6.setBackground(Color.GRAY);
+			btnCPU6.setForeground(Color.RED);
+			btnCPU6.setBackground(Color.LIGHT_GRAY);
+			repaint();
+			
+		}
 	}
 
 	@Override

@@ -88,12 +88,13 @@ public class pantalla_preguntes_lletres extends JFrame {
 		gbc_lblrespostaLletres.gridy = 4;
 		contentPane.add(lblrespostaLletres, gbc_lblrespostaLletres);
 		
+	
 		JButton btnEnviarRespostaLletres = new JButton("Respon");
 		btnEnviarRespostaLletres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
 				String correcto = selec.selecPalabraCompleta(palabra);
-
+					
 				dispose();
 				if(respuesta.equals(correcto)) {
 					pregunta_correcte pc = new pregunta_correcte();
@@ -103,6 +104,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 					pi.setVisible(true);
 				}
 			}
+			
 		});
 		
 		textField = new JTextField();
@@ -120,6 +122,13 @@ public class pantalla_preguntes_lletres extends JFrame {
 		gbc_btnEnviarRespostaLletres.gridx = 0;
 		gbc_btnEnviarRespostaLletres.gridy = 6;
 		contentPane.add(btnEnviarRespostaLletres, gbc_btnEnviarRespostaLletres);
+		
+//		if(nombre.contains("CPU")) {
+//			dispose();
+//			String correcto = selec.selecPalabraCompleta(palabra);
+//			pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
+//			pi.setVisible(true);
+//		}	
 	}
 
 }

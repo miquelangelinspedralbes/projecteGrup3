@@ -192,7 +192,7 @@ public class Selects {
 		int puntos = 0;
 		try {
 			stmt = conexion.createStatement();
-			rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idPregunta = " + idUltimaPartida + " && nombreJugador = '" + nombre + "'");
+			rs = stmt.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE idPartida = " + idUltimaPartida + " && nombreJugador = '" + nombre + "'");
 			rs.next();
 			puntos = rs.getInt(1);
 		} catch (SQLException e) {

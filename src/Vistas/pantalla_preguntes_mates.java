@@ -97,13 +97,14 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_lblrespostaMates.gridy = 4;
 		contentPane.add(lblrespostaMates, gbc_lblrespostaMates);
 		
+		
 		JButton btnEnviarRespostaMates = new JButton("Respon");
 		btnEnviarRespostaMates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
 				int resultado = Integer.parseInt(respuesta);
 				int correcto = selec.respuestaMates(ecuacion);
-				
+					
 				dispose();
 				if(resultado == correcto) {
 					pregunta_correcte pc = new pregunta_correcte();
@@ -111,7 +112,7 @@ public class pantalla_preguntes_mates extends JFrame {
 				}else {
 					pregunta_incorrecte pi = new pregunta_incorrecte(String.valueOf(correcto));
 					pi.setVisible(true);
-				}
+				}		
 			}
 		});
 		
@@ -131,6 +132,12 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_btnEnviarRespostaMates.gridx = 0;
 		gbc_btnEnviarRespostaMates.gridy = 6;
 		contentPane.add(btnEnviarRespostaMates, gbc_btnEnviarRespostaMates);
+		
+//		if(nombre.contains("CPU")) {
+//			dispose();
+//			pregunta_correcte pc = new pregunta_correcte();
+//			pc.setVisible(true);
+//		}
 	}
 
 }

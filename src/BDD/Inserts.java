@@ -64,7 +64,7 @@ public class Inserts {
 	public void insertJuegan(int ronda, int idUltimaPartida, String nombre, int idPrgunta, int puntos, boolean contestado) {
 		try {
 			insert = conexion.prepareStatement("INSERT INTO JUEGAN VALUES (?,?,?,?,?,?)");
-			insert.setInt(1, ronda+1);
+			insert.setInt(1, ronda);
 			insert.setInt(2, idUltimaPartida);
 			insert.setString(3, nombre);
 			insert.setInt(4, idPrgunta);
