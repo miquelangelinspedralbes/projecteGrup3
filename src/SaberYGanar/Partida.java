@@ -48,6 +48,9 @@ public class Partida {
 	public static Inserts inser = new Inserts();
 	public static Selects selec = new Selects();
 	static int maxCPU = 0, contadorCPU = 0;
+	static conexionBD bdd = new conexionBD();
+	static Connection conexion = bdd.obtenerConexion();
+	static ArrayList<Integer> puntos = new ArrayList<Integer>();
 		
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {			
 			numeroDeJugadores = numJugador;
@@ -87,6 +90,7 @@ public class Partida {
 				}else if(j == 5) {
 					nombre6 = numsJugadors.get(j);
 				}
+				puntos.add(0);
 			}
 			for (int j = 0; j < this.maxCPU; j++) {
 				if (j == 0) {
@@ -193,6 +197,8 @@ public class Partida {
 			int punto = 0;
 			if (respuesta) {
 				punto = 1;
+				int puntoAnterior=puntos.get(jugadoresJugado-1) + 1;
+				puntos.set(jugadoresJugado-1, puntoAnterior);
 			}else
 				punto = 0;
 			String nombre = null;
@@ -230,7 +236,7 @@ public class Partida {
 					rondaActual++;
 					aux = false;
 					if(rondaActual != numeroDeRondas) {
-						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6);
+						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos);
 						r.setVisible(true);
 					}
 				}
@@ -240,6 +246,15 @@ public class Partida {
 			
 			if (rondaActual == numeroDeRondas) {
 				inser.commit();
+				try {
+					actualitzarHistoric();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				ranquingFinal rf = null;
 				rf = new ranquingFinal(numeroDeJugadores, idUltimaPartida);
 				rf.setVisible(true);
@@ -248,47 +263,50 @@ public class Partida {
 				jugadoresJugado++;
 		}
 	
-//	public void actualitzarHistoric() throws SQLException, IOException {
-//        Map<String, Integer> unsortedMap = getPuntuacions();
-//
-//        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-//
-//        unsortedMap.entrySet().stream()
-//            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
-//            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-//        String puntuacionsstr = sortedMap.toString();
-//        puntuacionsstr= puntuacionsstr.replace("{","");
-//        puntuacionsstr= puntuacionsstr.replace("="," ");
-//        puntuacionsstr= puntuacionsstr.replace(",","");
-//        puntuacionsstr= puntuacionsstr.replace("}","");
-//        File arxhistoric = new File("historic.txt");
-//        if(!arxhistoric.exists()){
-//            arxhistoric.createNewFile();
-//        }
-//        FileWriter fw = new FileWriter(arxhistoric,true);
-//        BufferedWriter bw = new BufferedWriter(fw);
-//        bw.write(puntuacionsstr);
-//        bw.close();
-//        fw.close();
-//    }
+	public void actualitzarHistoric() throws SQLException, IOException {
+        Map<String, Integer> unsortedMap = getPuntuacions();
 
-//    public static Map<String, Integer> getPuntuacions() throws SQLException{
-//        String nom;
-//        int puntuacio;
-//        Statement stmt = conexion.createStatement();
-//        PreparedStatement stmt2 = null;
-//        ResultSet set = stmt.executeQuery("SELECT nombre FROM JUGADORES");
-//        stmt2 = conexion.prepareStatement("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = (?)");
-//        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
-//
-//        for(int i=0;set.next();i++) {
-//            nom =  set.getString(1);
-//            stmt2.setString(1, nom);
-//            puntuacio = stmt2.executeUpdate();
-//            Puntuacions.put(nom, puntuacio);
-//        }
-//        return Puntuacions;
-//    }
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+
+        unsortedMap.entrySet().stream()
+            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
+            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+        String puntuacionsstr = sortedMap.toString();
+        puntuacionsstr= puntuacionsstr.replace("{","");
+        puntuacionsstr= puntuacionsstr.replace("="," ");
+        puntuacionsstr= puntuacionsstr.replace(",","");
+        puntuacionsstr= puntuacionsstr.replace("}","");
+        File arxhistoric = new File("historic.txt");
+        if(!arxhistoric.exists()){
+            arxhistoric.createNewFile();
+        }
+        FileWriter fw = new FileWriter(arxhistoric,true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(puntuacionsstr);
+        bw.write("\n");
+        bw.close();
+        fw.close();
+    }
+
+    public static Map<String, Integer> getPuntuacions() throws SQLException{
+        String nom;
+        int puntuacio;
+        Statement stmt = conexion.createStatement();
+        Statement stmt22 = conexion.createStatement();
+        ResultSet stmt2 = null;
+        ResultSet set = stmt.executeQuery("SELECT nombreJugador FROM JUEGAN WHERE idPartida = " + idUltimaPartida);
+       
+        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
+
+        for(int i=0;set.next();i++) {
+            nom =  set.getString(1);
+            stmt2 = stmt22.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = '" + nom + "' && idPartida = " + idUltimaPartida);
+            stmt2.next();
+            puntuacio = stmt2.getInt(1);
+            Puntuacions.put(nom, puntuacio);
+        }
+        return Puntuacions;
+    }
     
     public void jugarCPU() {
    		if(contadorCPU == maxCPU) {
