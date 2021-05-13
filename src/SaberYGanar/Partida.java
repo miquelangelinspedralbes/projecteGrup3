@@ -47,11 +47,9 @@ public class Partida {
 	public static boolean aux = false, esCPU = false;
 	public static Inserts inser = new Inserts();
 	public static Selects selec = new Selects();
-	static conexionBD bd = new conexionBD();
-	static Connection conexion = bd.obtenerConexion();
-	static int maxCPU = 2, contadorCPU = 0;
+	static int maxCPU = 0, contadorCPU = 0;
 		
-	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {
+	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {			
 			numeroDeJugadores = numJugador;
 			numeroDeRondas = numRondas;
 			//this.maxCPU = contadorCPU;
@@ -151,7 +149,7 @@ public class Partida {
 					pi.setVisible(true);
 				}else {
 					numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
-					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(selec.selecOcultaLetras(numRandom), nombre);
+					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(numRandom, nombre);
 					pL.setVisible(true);
 				}
 			}
@@ -161,7 +159,7 @@ public class Partida {
 					pc.setVisible(true);
 				}else {
 					numRandom = (int) (Math.random()*cantIdMates);
-					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(selec.selecEcuacioMates(numRandom), nombre);
+					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(numRandom, nombre);
 					pM.setVisible(true);
 				}
 			}
@@ -178,7 +176,7 @@ public class Partida {
 					}
 				}else {
 					numRandom = (int) (Math.random()*(cantIdIngles-(cantIdMates+1)+1)+(cantIdMates+1));
-					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(selec.selecEnunciadoIngles(numRandom), selec.selecRespuestasIngles(numRandom), nombre);
+					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(numRandom, nombre);
 					pI.setVisible(true);
 				}
 			}
@@ -241,63 +239,69 @@ public class Partida {
 				pasarRondas();
 			
 			if (rondaActual == numeroDeRondas) {
-				System.out.println("Partida acabada");
+				inser.commit();
 				ranquingFinal rf = null;
-				rf = new ranquingFinal(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6);
+				rf = new ranquingFinal(numeroDeJugadores, idUltimaPartida);
 				rf.setVisible(true);
 			}
 			if(!esCPU)
 				jugadoresJugado++;
 		}
 	
-	public void actualitzarHistoric() throws SQLException, IOException {
-        Map<String, Integer> unsortedMap = getPuntuacions();
+//	public void actualitzarHistoric() throws SQLException, IOException {
+//        Map<String, Integer> unsortedMap = getPuntuacions();
+//
+//        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+//
+//        unsortedMap.entrySet().stream()
+//            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
+//            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+//        String puntuacionsstr = sortedMap.toString();
+//        puntuacionsstr= puntuacionsstr.replace("{","");
+//        puntuacionsstr= puntuacionsstr.replace("="," ");
+//        puntuacionsstr= puntuacionsstr.replace(",","");
+//        puntuacionsstr= puntuacionsstr.replace("}","");
+//        File arxhistoric = new File("historic.txt");
+//        if(!arxhistoric.exists()){
+//            arxhistoric.createNewFile();
+//        }
+//        FileWriter fw = new FileWriter(arxhistoric,true);
+//        BufferedWriter bw = new BufferedWriter(fw);
+//        bw.write(puntuacionsstr);
+//        bw.close();
+//        fw.close();
+//    }
 
-        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-
-        unsortedMap.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
-            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-        String puntuacionsstr = sortedMap.toString();
-        puntuacionsstr= puntuacionsstr.replace("{","");
-        puntuacionsstr= puntuacionsstr.replace("="," ");
-        puntuacionsstr= puntuacionsstr.replace(",","");
-        puntuacionsstr= puntuacionsstr.replace("}","");
-        File arxhistoric = new File("historic.txt");
-        if(!arxhistoric.exists()){
-            arxhistoric.createNewFile();
-        }
-        FileWriter fw = new FileWriter(arxhistoric,true);
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(puntuacionsstr);
-        bw.close();
-        fw.close();
-    }
-
-    public static Map<String, Integer> getPuntuacions() throws SQLException{
-        String nom;
-        int puntuacio;
-        Statement stmt = conexion.createStatement();
-        PreparedStatement stmt2 = null;
-        ResultSet set = stmt.executeQuery("SELECT nombre FROM JUGADORES");
-        stmt2 = conexion.prepareStatement("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = (?)");
-        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
-
-        for(int i=0;set.next();i++) {
-            nom =  set.getString(1);
-            stmt2.setString(1, nom);
-            puntuacio = stmt2.executeUpdate();
-            Puntuacions.put(nom, puntuacio);
-        }
-        return Puntuacions;
-    }
+//    public static Map<String, Integer> getPuntuacions() throws SQLException{
+//        String nom;
+//        int puntuacio;
+//        Statement stmt = conexion.createStatement();
+//        PreparedStatement stmt2 = null;
+//        ResultSet set = stmt.executeQuery("SELECT nombre FROM JUGADORES");
+//        stmt2 = conexion.prepareStatement("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = (?)");
+//        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
+//
+//        for(int i=0;set.next();i++) {
+//            nom =  set.getString(1);
+//            stmt2.setString(1, nom);
+//            puntuacio = stmt2.executeUpdate();
+//            Puntuacions.put(nom, puntuacio);
+//        }
+//        return Puntuacions;
+//    }
     
     public void jugarCPU() {
-   		if(contadorCPU == maxCPU)
+   		if(contadorCPU == maxCPU) {
    			esCPU = false;
+   			contadorCPU = 0;
+   		}
    		else {
    			contadorCPU++;
     		pasarRondas();
     	}    			
+    }
+    
+    public void rollBack() {
+    	inser.rollBack();
     }
 }

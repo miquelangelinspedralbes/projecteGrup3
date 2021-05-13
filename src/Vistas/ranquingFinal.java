@@ -28,13 +28,15 @@ public class ranquingFinal extends JFrame {
 
 	private JPanel contentPane;
 	public Integer totaljugadors;
-	Selects selec = new Selects();
+	static Selects selec = new Selects();
 	/**
 	 * Create the frame.
 	 * @throws InterruptedException 
 	 */
-	public ranquingFinal(int numJugadores, int idUltimaPartida, String nombre1, String nombre2, String nombre3, String nombre4, String nombre5, String nombre6) {
+	public ranquingFinal(int numJugadores, int idUltimaPartida) {
 		totaljugadors = numJugadores;
+		selec.selecRanquing(idUltimaPartida);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 359, 362);
 		contentPane = new JPanel();
@@ -235,8 +237,8 @@ public class ranquingFinal extends JFrame {
 		
 		if (totaljugadors.equals(1) ) {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			
 			posicio2.setVisible(false);
 			posicio3.setVisible(false);
@@ -245,80 +247,79 @@ public class ranquingFinal extends JFrame {
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(2) ) {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			posicio2.setVisible(true);
-			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			nomjug2.setText(selec.nombre.get(1));
+			puntosjug2.setText(String.valueOf(selec.puntos.get(1)));
 			posicio3.setVisible(false);
 			posicio4.setVisible(false);
 			posicio5.setVisible(false);
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(3) ) {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			posicio2.setVisible(true);
-			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			nomjug2.setText(selec.nombre.get(1));
+			puntosjug2.setText(String.valueOf(selec.puntos.get(1)));
 			posicio3.setVisible(true);
-			nomjug3.setText(nombre3);
-			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			nomjug3.setText(selec.nombre.get(2));
+			puntosjug3.setText(String.valueOf(selec.puntos.get(2)));
 			posicio4.setVisible(false);
 			posicio5.setVisible(false);
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(4) ) {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			posicio2.setVisible(true);
-			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			nomjug2.setText(selec.nombre.get(1));
+			puntosjug2.setText(String.valueOf(selec.puntos.get(1)));
 			posicio3.setVisible(true);
-			nomjug3.setText(nombre3);
-			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			nomjug3.setText(selec.nombre.get(2));
+			puntosjug3.setText(String.valueOf(selec.puntos.get(2)));
 			posicio4.setVisible(true);
-			nomjug4.setText(nombre4);
-			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
+			nomjug4.setText(selec.nombre.get(3));
+			puntosjug4.setText(String.valueOf(selec.puntos.get(3)));
 			posicio5.setVisible(false);
 			posicio6.setVisible(false);
 		}else if (totaljugadors.equals(5) ) {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			posicio2.setVisible(true);
-			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			nomjug2.setText(selec.nombre.get(1));
+			puntosjug2.setText(String.valueOf(selec.puntos.get(1)));
 			posicio3.setVisible(true);
-			nomjug3.setText(nombre3);
-			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			nomjug3.setText(selec.nombre.get(2));
+			puntosjug3.setText(String.valueOf(selec.puntos.get(2)));
 			posicio4.setVisible(true);
-			nomjug4.setText(nombre4);
-			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
+			nomjug4.setText(selec.nombre.get(3));
+			puntosjug4.setText(String.valueOf(selec.puntos.get(3)));
 			posicio5.setVisible(true);
-			nomjug5.setText(nombre5);
-			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
+			nomjug5.setText(selec.nombre.get(4));
+			puntosjug5.setText(String.valueOf(selec.puntos.get(4)));
 			posicio6.setVisible(false);
-			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
 		}else {
 			posicio1.setVisible(true);
-			nomjug1.setText(nombre1);
-			puntosjug1.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre1)));
+			nomjug1.setText(selec.nombre.get(0));
+			puntosjug1.setText(String.valueOf(selec.puntos.get(0)));
 			posicio2.setVisible(true);
-			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			nomjug2.setText(selec.nombre.get(1));
+			puntosjug2.setText(String.valueOf(selec.puntos.get(1)));
 			posicio3.setVisible(true);
-			nomjug3.setText(nombre3);
-			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			nomjug3.setText(selec.nombre.get(2));
+			puntosjug3.setText(String.valueOf(selec.puntos.get(2)));
 			posicio4.setVisible(true);
-			nomjug4.setText(nombre4);
-			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
+			nomjug4.setText(selec.nombre.get(3));
+			puntosjug4.setText(String.valueOf(selec.puntos.get(3)));
 			posicio5.setVisible(true);
-			nomjug5.setText(nombre5);
-			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
+			nomjug5.setText(selec.nombre.get(4));
+			puntosjug5.setText(String.valueOf(selec.puntos.get(4)));
 			posicio6.setVisible(true);
-			nomjug6.setText(nombre6);
-			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
+			nomjug6.setText(selec.nombre.get(5));
+			puntosjug6.setText(String.valueOf(selec.puntos.get(5)));
 		}
 		
 		

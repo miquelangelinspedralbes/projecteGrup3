@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class Selects {
+	public ArrayList<String> nombre = new ArrayList<String>();
+	public ArrayList<Integer> puntos = new ArrayList<Integer>();
+	
 	static conexionBD bd = new conexionBD();
 	static Connection conexion = bd.obtenerConexion();
 	static Statement stmt = null;
@@ -203,7 +206,25 @@ public class Selects {
 	}
 	
 	
-	
+	public void selecRanquing(int idPartida) {
+		
+		try {
+			stmt = conexion.createStatement();
+			rs = stmt.executeQuery("SELECT nombreJugador, SUM(puntos) as puntos\r\n"
+					+ "FROM JUEGAN\r\n"
+					+ " WHERE idPartida = "+ idPartida + "\r\n"
+					+ " GROUP BY nombreJugador\r\n"
+					+ " ORDER BY SUM(puntos) DESC;\r\n"
+					+ "");
+			 for(int i=0;rs.next();i++) {
+	            nombre.add(rs.getString(1));
+	            puntos.add(rs.getInt(2));
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 }

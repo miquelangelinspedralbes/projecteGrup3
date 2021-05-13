@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import BDD.Selects;
 import BDD.conexionBD;
+import SaberYGanar.Letras;
+import SaberYGanar.Partida;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -18,6 +20,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
 
@@ -32,7 +37,8 @@ public class pantalla_preguntes_lletres extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_lletres(String palabra, String nombre) {
+	public pantalla_preguntes_lletres(int numRandom, String nombre) {
+		Letras letras = new Letras(numRandom);
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 373);
@@ -64,7 +70,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaLletres = new JTextPane();
-		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\n" + palabra + "\n\n");
+		txtpnPreguntaLletres.setText("pregunta sobre Lletres, endevina la paraula correcte:\n\n" + letras.getEnunciado() + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaLletres = new GridBagConstraints();
 		gbc_txtpnPreguntaLletres.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaLletres.fill = GridBagConstraints.BOTH;
@@ -93,14 +99,13 @@ public class pantalla_preguntes_lletres extends JFrame {
 		btnEnviarRespostaLletres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
-				String correcto = selec.selecPalabraCompleta(palabra);
 					
 				dispose();
-				if(respuesta.equals(correcto)) {
+				if(respuesta.equals(letras.getPalabraEntera())) {
 					pregunta_correcte pc = new pregunta_correcte();
 					pc.setVisible(true);
 				}else {
-					pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
+					pregunta_incorrecte pi = new pregunta_incorrecte(letras.getPalabraEntera());
 					pi.setVisible(true);
 				}
 			}
@@ -123,12 +128,12 @@ public class pantalla_preguntes_lletres extends JFrame {
 		gbc_btnEnviarRespostaLletres.gridy = 6;
 		contentPane.add(btnEnviarRespostaLletres, gbc_btnEnviarRespostaLletres);
 		
-//		if(nombre.contains("CPU")) {
-//			dispose();
-//			String correcto = selec.selecPalabraCompleta(palabra);
-//			pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
-//			pi.setVisible(true);
-//		}	
+		addWindowListener((WindowListener) new WindowAdapter() {
+			   public void windowClosing(WindowEvent e) {
+				   Partida p = new Partida();
+				   p.rollBack();
+			   }
+			 });
 	}
 
 }

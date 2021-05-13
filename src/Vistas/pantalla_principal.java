@@ -148,13 +148,20 @@ public class pantalla_principal extends JFrame {
 		gbc_lblNewLabel_1_1.gridy = 0;
 		panel_2.add(lblNewLabel_1_1, gbc_lblNewLabel_1_1);
 		
-		JButton btnNewButton_1 = new JButton("Informes");
-		btnNewButton_1.setBackground(Color.WHITE);
+		JButton btnInforme = new JButton("Informes");
+		btnInforme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 informes informe = new informes();
+				informe.setVisible(true);
+				dispose();
+			}
+		});
+		btnInforme.setBackground(Color.WHITE);
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton_1.gridx = 1;
 		gbc_btnNewButton_1.gridy = 0;
-		panel_2.add(btnNewButton_1, gbc_btnNewButton_1);
+		panel_2.add(btnInforme, gbc_btnNewButton_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.DARK_GRAY);

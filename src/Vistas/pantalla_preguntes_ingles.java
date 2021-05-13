@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import BDD.Selects;
+import SaberYGanar.Ingles;
+import SaberYGanar.Partida;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -23,6 +25,9 @@ import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Enumeration;
 import java.awt.event.ActionEvent;
 
@@ -33,7 +38,8 @@ public class pantalla_preguntes_ingles extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_ingles(String enunciado, String respuestas, String nombre) {
+	public pantalla_preguntes_ingles(int numRandom, String nombre) {
+		Ingles ingles = new Ingles(numRandom);
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 364, 414);
@@ -66,7 +72,7 @@ public class pantalla_preguntes_ingles extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaIngles = new JTextPane();
-		txtpnPreguntaIngles.setText("pregunta d'anglés, tria la resposta correcte:\n\n" + enunciado);
+		txtpnPreguntaIngles.setText("pregunta d'anglés, tria la resposta correcte:\n\n" + ingles.getEnunciado());
 		GridBagConstraints gbc_txtpnPreguntaIngles = new GridBagConstraints();
 		gbc_txtpnPreguntaIngles.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaIngles.fill = GridBagConstraints.BOTH;
@@ -81,7 +87,7 @@ public class pantalla_preguntes_ingles extends JFrame {
 		gbc_separator_1.gridy = 3;
 		contentPane.add(separator_1, gbc_separator_1);
 		
-		JLabel lblrespostaIngles = new JLabel("  Selecciona l'opció correcte: ");
+		JLabel lblrespostaIngles = new JLabel("  Selecciona la opcion correcta: ");
 		lblrespostaIngles.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblrespostaIngles = new GridBagConstraints();
 		gbc_lblrespostaIngles.anchor = GridBagConstraints.SOUTHWEST;
@@ -99,7 +105,7 @@ public class pantalla_preguntes_ingles extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		String[] respuesta = respuestas.split("\\|");
+		String[] respuesta = ingles.getRespuestas().split("\\|");
 		JRadioButton rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
 		rdbtnNewRadioButton.setForeground(Color.WHITE);
 		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
@@ -141,14 +147,13 @@ public class pantalla_preguntes_ingles extends JFrame {
 						}
 					}
 				}
-				String correcto = selec.selecRespuestasCorrectaIngles(enunciado);
 				
 				dispose();
-				if(respuesta.equals(correcto)) {
+				if(respuesta.equals(ingles.getRespuestaCorrecta())) {
 					pregunta_correcte pc = new pregunta_correcte();
 					pc.setVisible(true);
 				}else {
-					pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
+					pregunta_incorrecte pi = new pregunta_incorrecte(ingles.getRespuestaCorrecta());
 					pi.setVisible(true);
 				}
 			}
@@ -162,18 +167,12 @@ public class pantalla_preguntes_ingles extends JFrame {
 		gbc_btnEnviarRespostaIngles.gridy = 6;
 		contentPane.add(btnEnviarRespostaIngles, gbc_btnEnviarRespostaIngles);
 		
-//		if(nombre.contains("CPU")) {
-//			dispose();
-//			int numRandom = (int) (Math.random()*2);
-//			if(numRandom == 0) {
-//				String correcto = selec.selecRespuestasCorrectaIngles(enunciado);
-//				pregunta_incorrecte pi = new pregunta_incorrecte(correcto);
-//				pi.setVisible(true);
-//			}else {
-//				pregunta_correcte pc = new pregunta_correcte();
-//				pc.setVisible(true);
-//			}
-//		}
+		addWindowListener((WindowListener) new WindowAdapter() {
+			   public void windowClosing(WindowEvent e) {
+				   Partida p = new Partida();
+				   p.rollBack();
+			   }
+			 });
 	}
 
 }

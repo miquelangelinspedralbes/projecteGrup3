@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import BDD.Selects;
 import BDD.conexionBD;
+import SaberYGanar.Mates;
 import SaberYGanar.Partida;
 
 import java.awt.GridBagLayout;
@@ -25,6 +26,9 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +45,9 @@ public class pantalla_preguntes_mates extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public pantalla_preguntes_mates(String ecuacion, String nombre) {
+	public pantalla_preguntes_mates(int numRandom, String nombre) {
+		Mates math = new Mates(numRandom);
+		
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 373);
@@ -73,7 +79,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		contentPane.add(separator, gbc_separator);
 		
 		JTextPane txtpnPreguntaSobreMatematiques = new JTextPane();
-		txtpnPreguntaSobreMatematiques.setText("pregunta sobre matematiques, calcula el resultat del segúent problema:\n\n " + ecuacion + "\n\n");
+		txtpnPreguntaSobreMatematiques.setText("pregunta sobre matematiques, calcula el resultat del segúent problema:\n\n " + math.getEnunciado() + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaSobreMatematiques = new GridBagConstraints();
 		gbc_txtpnPreguntaSobreMatematiques.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaSobreMatematiques.fill = GridBagConstraints.BOTH;
@@ -103,14 +109,13 @@ public class pantalla_preguntes_mates extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
 				int resultado = Integer.parseInt(respuesta);
-				int correcto = selec.respuestaMates(ecuacion);
 					
 				dispose();
-				if(resultado == correcto) {
+				if(resultado == math.getResultado()) {
 					pregunta_correcte pc = new pregunta_correcte();
 					pc.setVisible(true);
 				}else {
-					pregunta_incorrecte pi = new pregunta_incorrecte(String.valueOf(correcto));
+					pregunta_incorrecte pi = new pregunta_incorrecte(String.valueOf(math.getResultado()));
 					pi.setVisible(true);
 				}		
 			}
@@ -133,11 +138,12 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_btnEnviarRespostaMates.gridy = 6;
 		contentPane.add(btnEnviarRespostaMates, gbc_btnEnviarRespostaMates);
 		
-//		if(nombre.contains("CPU")) {
-//			dispose();
-//			pregunta_correcte pc = new pregunta_correcte();
-//			pc.setVisible(true);
-//		}
+		addWindowListener((WindowListener) new WindowAdapter() {
+			   public void windowClosing(WindowEvent e) {
+				   Partida p = new Partida();
+				   p.rollBack();
+			   }
+			 });
 	}
 
 }

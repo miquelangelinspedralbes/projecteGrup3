@@ -26,6 +26,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -339,7 +342,12 @@ public class ranquing extends JFrame {
 			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
 		}
 		
-		
+		addWindowListener((WindowListener) new WindowAdapter() {
+			   public void windowClosing(WindowEvent e) {
+				   Partida p = new Partida();
+				   p.rollBack();
+			   }
+			 });
 	}
 
 }
