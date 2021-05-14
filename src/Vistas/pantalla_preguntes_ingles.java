@@ -30,6 +30,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Enumeration;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 
 public class pantalla_preguntes_ingles extends JFrame {
 
@@ -42,19 +43,19 @@ public class pantalla_preguntes_ingles extends JFrame {
 		Ingles ingles = new Ingles(numRandom);
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 364, 414);
+		setBounds(100, 100, 426, 448);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{358, 0};
-		gbl_contentPane.rowHeights = new int[]{33, 17, 135, 0, 33, 90, 43, 0};
+		gbl_contentPane.rowHeights = new int[]{33, 54, 105, 0, 41, 117, 43, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel Lbl_ingles_title = new JLabel("Responde a la pregunta de ingles: " + nombre);
+		JLabel Lbl_ingles_title = new JLabel("<dynamic>");
 		Lbl_ingles_title.setForeground(Color.RED);
 		Lbl_ingles_title.setFont(new Font("Dialog", Font.BOLD, 15));
 		GridBagConstraints gbc_Lbl_ingles_title = new GridBagConstraints();
@@ -64,15 +65,20 @@ public class pantalla_preguntes_ingles extends JFrame {
 		gbc_Lbl_ingles_title.gridy = 0;
 		contentPane.add(Lbl_ingles_title, gbc_Lbl_ingles_title);
 		
-		JSeparator separator = new JSeparator();
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.insets = new Insets(0, 0, 5, 0);
-		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 1;
-		contentPane.add(separator, gbc_separator);
+		JLabel lblRespondeALa = new JLabel("Respón a la pregunta d'Anglés: ");
+		lblRespondeALa.setFont(new Font("Dialog", Font.BOLD, 22));
+		lblRespondeALa.setForeground(Color.RED);
+		GridBagConstraints gbc_lblRespondeALa = new GridBagConstraints();
+		gbc_lblRespondeALa.insets = new Insets(0, 0, 5, 0);
+		gbc_lblRespondeALa.gridx = 0;
+		gbc_lblRespondeALa.gridy = 1;
+		contentPane.add(lblRespondeALa, gbc_lblRespondeALa);
 		
 		JTextPane txtpnPreguntaIngles = new JTextPane();
-		txtpnPreguntaIngles.setText("pregunta d'anglés, tria la resposta correcte:\n\n" + ingles.getEnunciado());
+		txtpnPreguntaIngles.setBackground(Color.DARK_GRAY);
+		txtpnPreguntaIngles.setForeground(Color.WHITE);
+		txtpnPreguntaIngles.setFont(new Font("Dialog", Font.PLAIN, 18));
+		txtpnPreguntaIngles.setText("Tria la resposta correcte:\n\n<dynamic>");
 		GridBagConstraints gbc_txtpnPreguntaIngles = new GridBagConstraints();
 		gbc_txtpnPreguntaIngles.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaIngles.fill = GridBagConstraints.BOTH;
@@ -87,53 +93,21 @@ public class pantalla_preguntes_ingles extends JFrame {
 		gbc_separator_1.gridy = 3;
 		contentPane.add(separator_1, gbc_separator_1);
 		
-		JLabel lblrespostaIngles = new JLabel("  Selecciona la opcion correcta: ");
-		lblrespostaIngles.setForeground(Color.WHITE);
+		JLabel lblrespostaIngles = new JLabel("  Selecciona l'opció correcte: ");
+		lblrespostaIngles.setForeground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblrespostaIngles = new GridBagConstraints();
-		gbc_lblrespostaIngles.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblrespostaIngles.anchor = GridBagConstraints.WEST;
 		gbc_lblrespostaIngles.insets = new Insets(0, 0, 5, 0);
 		gbc_lblrespostaIngles.gridx = 0;
 		gbc_lblrespostaIngles.gridy = 4;
 		contentPane.add(lblrespostaIngles, gbc_lblrespostaIngles);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.DARK_GRAY);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 5, 0);
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 5;
-		contentPane.add(panel, gbc_panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
 		String[] respuesta = ingles.getRespuestas().split("\\|");
-		JRadioButton rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
-		rdbtnNewRadioButton.setForeground(Color.WHITE);
-		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
-		panel.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton(respuesta[2]);
-		rdbtnNewRadioButton_1.setBackground(Color.DARK_GRAY);
-		rdbtnNewRadioButton_1.setForeground(Color.WHITE);
-		panel.add(rdbtnNewRadioButton_1);
-		
-		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(respuesta[3]);
-		rdbtnNewRadioButton_3.setBackground(Color.DARK_GRAY);
-		rdbtnNewRadioButton_3.setForeground(Color.WHITE);
-		panel.add(rdbtnNewRadioButton_3);
-		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
-		rdbtnNewRadioButton_2.setForeground(Color.WHITE);
-		rdbtnNewRadioButton_2.setBackground(Color.DARK_GRAY);
-		panel.add(rdbtnNewRadioButton_2);
 		
 		ButtonGroup group =new ButtonGroup();
-		group.add(rdbtnNewRadioButton);
-		group.add(rdbtnNewRadioButton_1);
-		group.add(rdbtnNewRadioButton_2);
-		group.add(rdbtnNewRadioButton_3);
 			
 		
-		JButton btnEnviarRespostaIngles = new JButton("Respon");
+		JButton btnEnviarRespostaIngles = new JButton("Respón");
 		btnEnviarRespostaIngles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = null;
@@ -152,17 +126,72 @@ public class pantalla_preguntes_ingles extends JFrame {
 				if(respuesta.equals(ingles.getRespuestaCorrecta())) {
 					pregunta_correcte pc = new pregunta_correcte();
 					pc.setVisible(true);
+					pc.setLocationRelativeTo(null);
 				}else {
 					pregunta_incorrecte pi = new pregunta_incorrecte(ingles.getRespuestaCorrecta());
 					pi.setVisible(true);
+					pi.setLocationRelativeTo(null);
 				}
 			}
 			
 		});
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 5;
+		contentPane.add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{60, 140, 0, 145, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		JRadioButton rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
+		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnNewRadioButton.gridx = 1;
+		gbc_rdbtnNewRadioButton.gridy = 1;
+		panel.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setForeground(Color.LIGHT_GRAY);
+		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
+		group.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(respuesta[3]);
+		GridBagConstraints gbc_rdbtnNewRadioButton_3 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_3.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnNewRadioButton_3.gridx = 3;
+		gbc_rdbtnNewRadioButton_3.gridy = 1;
+		panel.add(rdbtnNewRadioButton_3, gbc_rdbtnNewRadioButton_3);
+		rdbtnNewRadioButton_3.setBackground(Color.DARK_GRAY);
+		rdbtnNewRadioButton_3.setForeground(Color.LIGHT_GRAY);
+		group.add(rdbtnNewRadioButton_3);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton(respuesta[2]);
+		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_1.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnNewRadioButton_1.gridx = 1;
+		gbc_rdbtnNewRadioButton_1.gridy = 2;
+		panel.add(rdbtnNewRadioButton_1, gbc_rdbtnNewRadioButton_1);
+		rdbtnNewRadioButton_1.setBackground(Color.DARK_GRAY);
+		rdbtnNewRadioButton_1.setForeground(Color.LIGHT_GRAY);
+		group.add(rdbtnNewRadioButton_1);
+		
+		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
+		GridBagConstraints gbc_rdbtnNewRadioButton_2 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_2.gridx = 3;
+		gbc_rdbtnNewRadioButton_2.gridy = 2;
+		panel.add(rdbtnNewRadioButton_2, gbc_rdbtnNewRadioButton_2);
+		rdbtnNewRadioButton_2.setForeground(Color.LIGHT_GRAY);
+		rdbtnNewRadioButton_2.setBackground(Color.DARK_GRAY);
+		group.add(rdbtnNewRadioButton_2);
 		btnEnviarRespostaIngles.setBackground(Color.WHITE);
 		btnEnviarRespostaIngles.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaIngles = new GridBagConstraints();
-		gbc_btnEnviarRespostaIngles.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnEnviarRespostaIngles.fill = GridBagConstraints.BOTH;
 		gbc_btnEnviarRespostaIngles.gridx = 0;
 		gbc_btnEnviarRespostaIngles.gridy = 6;
 		contentPane.add(btnEnviarRespostaIngles, gbc_btnEnviarRespostaIngles);

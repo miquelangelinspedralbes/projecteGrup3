@@ -21,6 +21,7 @@ import java.util.Scanner;
 import BDD.Inserts;
 import BDD.Selects;
 import BDD.conexionBD;
+import Vistas.pantalla_jugadors;
 import Vistas.pantalla_preguntes_ingles;
 import Vistas.pantalla_preguntes_lletres;
 import Vistas.pantalla_preguntes_mates;
@@ -55,7 +56,7 @@ public class Partida {
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {			
 			numeroDeJugadores = numJugador;
 			numeroDeRondas = numRondas;
-			//this.maxCPU = contadorCPU;
+			maxCPU = contadorCPU;
 			
 			inser.inserPartida();
 			idUltimaPartida = selec.selecMaxPartida();
@@ -92,7 +93,7 @@ public class Partida {
 				}
 				puntos.add(0);
 			}
-			for (int j = 0; j < this.maxCPU; j++) {
+			for (int j = 0; j < maxCPU; j++) {
 				if (j == 0) {
 					CPU1 = "CPU1";
 				}else if(j == 1) {
@@ -151,20 +152,24 @@ public class Partida {
 					String correcto = selec.selecPalabraCompleta("aa");
 					pregunta_incorrecte pi = new pregunta_incorrecte(correcto, nombre);
 					pi.setVisible(true);
+					pi.setLocationRelativeTo(null);
 				}else {
 					numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
 					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(numRandom, nombre);
 					pL.setVisible(true);
+					pL.setLocationRelativeTo(null);
 				}
 			}
 			else if(pregunta == 1) {
 				if(esCPU) {
 					pregunta_correcte pc = new pregunta_correcte(nombre);
 					pc.setVisible(true);
+					pc.setLocationRelativeTo(null);
 				}else {
 					numRandom = (int) (Math.random()*cantIdMates);
 					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(numRandom, nombre);
 					pM.setVisible(true);
+					pM.setLocationRelativeTo(null);
 				}
 			}
 			else{
@@ -174,14 +179,17 @@ public class Partida {
 						String correcto = selec.selecRespuestasCorrectaIngles("hola");
 						pregunta_incorrecte pi = new pregunta_incorrecte(correcto, nombre);
 						pi.setVisible(true);
+						pi.setLocationRelativeTo(null);
 					}else {
 						pregunta_correcte pc = new pregunta_correcte(nombre);
 						pc.setVisible(true);
+						pc.setLocationRelativeTo(null);
 					}
 				}else {
 					numRandom = (int) (Math.random()*(cantIdIngles-(cantIdMates+1)+1)+(cantIdMates+1));
 					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(numRandom, nombre);
 					pI.setVisible(true);
+					pI.setLocationRelativeTo(null);
 				}
 			}
 		}
@@ -189,6 +197,7 @@ public class Partida {
 		public void pasarRondas(){		
 			selecRonda rondaElegir = new selecRonda();
 			rondaElegir.setVisible(true);
+			rondaElegir.setLocationRelativeTo(null);
 			hilo1 = new Thread(rondaElegir);
 			hilo1.start();
 		}
@@ -238,6 +247,7 @@ public class Partida {
 					if(rondaActual != numeroDeRondas) {
 						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos);
 						r.setVisible(true);
+						r.setLocationRelativeTo(null);
 					}
 				}
 			}
@@ -258,6 +268,7 @@ public class Partida {
 				ranquingFinal rf = null;
 				rf = new ranquingFinal(numeroDeJugadores, idUltimaPartida);
 				rf.setVisible(true);
+				rf.setLocationRelativeTo(null);
 			}
 			if(!esCPU)
 				jugadoresJugado++;

@@ -38,7 +38,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	String partida = "Partida Curta";
 	Integer contadorjugadors = 1;
 	Integer contadorCPU = 0;
-	Vector CPUclick = new Vector(6);//vector de boolean para comprovar que no se añadan por accidente jugadores de la cpu
+	Boolean CPUclick[] = {true, true, true, true, true};//array de boolean para comprovar que no se añadan por accidente jugadores de la cpu
 	
 	
 	JPanel jugador2;
@@ -54,14 +54,14 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	private JTextField namejugador5;
 	private JTextField namejugador6;
 	
-	JButton btnJugador1;
+
 	JButton btnJugador2;
 	JButton btnJugador3;
 	JButton btnJugador4;
 	JButton btnJugador5;
 	JButton btnJugador6;
 	
-	JButton btnCPU1;
+	
 	JButton btnCPU2;
 	JButton btnCPU3;
 	JButton btnCPU4;
@@ -72,12 +72,11 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	 * Create the frame.
 	 */
 	public pantalla_jugar_selecciojugadors(){
-		for (int i = 0; i>6; i++) {
-			CPUclick.add(i, 0);
-		}
+		setResizable(false);
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 453, 647);
+		setBounds(100, 100, 451, 653);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -186,7 +185,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbc_jugador1.gridy = 0;
 		body.add(jugador1, gbc_jugador1);
 		GridBagLayout gbl_jugador1 = new GridBagLayout();
-		gbl_jugador1.columnWidths = new int[]{0, 181, 75, 0};
+		gbl_jugador1.columnWidths = new int[]{0, 181, 94, 0};
 		gbl_jugador1.rowHeights = new int[]{40, 0};
 		gbl_jugador1.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_jugador1.rowWeights = new double[]{1.0, Double.MIN_VALUE};
@@ -213,7 +212,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		namejugador1.setColumns(10);
 		
 		JPanel panelj1 = new JPanel();
-		panelj1.setBackground(Color.WHITE);
+		panelj1.setBackground(Color.DARK_GRAY);
 		panelj1.setForeground(Color.WHITE);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -226,28 +225,6 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 			new RowSpec[] {
 				RowSpec.decode("max(20dlu;default)"),
 				RowSpec.decode("max(18dlu;default)"),}));
-		
-		JButton btnJugador1 = new JButton("Jugador");
-		btnJugador1.setBackground(Color.LIGHT_GRAY);
-		btnJugador1.setForeground(Color.RED);
-		btnJugador1.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				personajejugador(btnJugador1.getName());
-			}
-		});
-		panelj1.add(btnJugador1, "2, 1, fill, center");
-		
-		JButton btnCPU1 = new JButton("CPU");
-		btnCPU1.setForeground(Color.WHITE);
-		btnCPU1.setBackground(Color.GRAY);
-		btnCPU1.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnCPU1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				personajeCPU(btnCPU1.getName());
-			}
-		});
-		panelj1.add(btnCPU1, "2, 2, fill, top");
 		
 		JPanel jugador2 = new JPanel();
 		jugador2.setBackground(Color.WHITE);
@@ -300,9 +277,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				RowSpec.decode("max(18dlu;default)"),}));
 		
 		JButton btnJugador2 = new JButton("Jugador");
-		btnJugador2.setForeground(Color.RED);
+		btnJugador2.setName("btnJugador2");
+		btnJugador2.setForeground(Color.WHITE);
 		btnJugador2.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador2.setBackground(Color.LIGHT_GRAY);
+		btnJugador2.setBackground(Color.GRAY);
 		btnJugador2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				personajejugador(btnJugador2.getName());
@@ -311,6 +289,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		panelj2.add(btnJugador2, "2, 1, fill, center");
 		
 		JButton btnCPU2 = new JButton("CPU");
+		btnCPU2.setName("btnCPU2");
 		btnCPU2.setForeground(Color.WHITE);
 		btnCPU2.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnCPU2.setBackground(Color.GRAY);
@@ -372,9 +351,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				RowSpec.decode("max(18dlu;default)"),}));
 		
 		JButton btnJugador3 = new JButton("Jugador");
-		btnJugador3.setForeground(Color.RED);
+		btnJugador3.setName("btnJugador3");
+		btnJugador3.setForeground(Color.WHITE);
 		btnJugador3.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador3.setBackground(Color.LIGHT_GRAY);
+		btnJugador3.setBackground(Color.GRAY);
 		btnJugador3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				personajejugador(btnJugador3.getName());
@@ -383,6 +363,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		panelj3.add(btnJugador3, "2, 1, fill, center");
 		
 		JButton btnCPU3 = new JButton("CPU");
+		btnCPU3.setName("btnCPU3");
 		btnCPU3.setForeground(Color.WHITE);
 		btnCPU3.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnCPU3.setBackground(Color.GRAY);
@@ -444,9 +425,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				RowSpec.decode("max(18dlu;default)"),}));
 		
 		JButton btnJugador4 = new JButton("Jugador");
-		btnJugador4.setForeground(Color.RED);
+		btnJugador4.setName("btnJugador4");
+		btnJugador4.setForeground(Color.WHITE);
 		btnJugador4.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador4.setBackground(Color.LIGHT_GRAY);
+		btnJugador4.setBackground(Color.GRAY);
 		btnJugador4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				personajejugador(btnJugador4.getName());
@@ -455,6 +437,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		panelj4.add(btnJugador4, "2, 1, fill, center");
 		
 		JButton btnCPU4 = new JButton("CPU");
+		btnCPU4.setName("btnCPU4");
 		btnCPU4.setForeground(Color.WHITE);
 		btnCPU4.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnCPU4.setBackground(Color.GRAY);
@@ -516,9 +499,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				RowSpec.decode("max(18dlu;default)"),}));
 		
 		JButton btnJugador5 = new JButton("Jugador");
-		btnJugador5.setForeground(Color.RED);
+		btnJugador5.setName("btnJugador5");
+		btnJugador5.setForeground(Color.WHITE);
 		btnJugador5.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador5.setBackground(Color.LIGHT_GRAY);
+		btnJugador5.setBackground(Color.GRAY);
 		btnJugador5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				personajejugador(btnJugador5.getName());
@@ -527,6 +511,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		panelj5.add(btnJugador5, "2, 1, fill, center");
 		
 		JButton btnCPU5 = new JButton("CPU");
+		btnCPU5.setName("btnCPU5");
 		btnCPU5.setForeground(Color.WHITE);
 		btnCPU5.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnCPU5.setBackground(Color.GRAY);
@@ -587,9 +572,10 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				RowSpec.decode("max(18dlu;default)"),}));
 		
 		JButton btnJugador6 = new JButton("Jugador");
-		btnJugador6.setForeground(Color.RED);
+		btnJugador6.setName("btnJugador6");
+		btnJugador6.setForeground(Color.WHITE);
 		btnJugador6.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnJugador6.setBackground(Color.LIGHT_GRAY);
+		btnJugador6.setBackground(Color.GRAY);
 		btnJugador6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				personajejugador(btnJugador6.getName());
@@ -598,6 +584,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		panelj6.add(btnJugador6, "2, 1, fill, center");
 		
 		JButton btnCPU6 = new JButton("CPU");
+		btnCPU6.setName("btnCPU6");
 		btnCPU6.setForeground(Color.WHITE);
 		btnCPU6.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnCPU6.setBackground(Color.GRAY);
@@ -618,7 +605,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		gbl_footer.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		footer.setLayout(gbl_footer);
 		
-		JButton jugarbtn = new JButton("A jugar!");
+		JButton jugarbtn = new JButton("");
 		jugarbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ronda = 3;
@@ -713,58 +700,39 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	}
 
 	public void personajejugador(String btnname) {
-		if (btnname.equals("btnjugador1") && CPUclick.elementAt(0).equals(1)) {
+		if (btnname.equals("btnjugador2") || CPUclick[0].equals(false)) {
+			CPUclick[0] = true;
 			contadorCPU--;
-			namejugador1.setText("enter name");
-			btnJugador1.setForeground(Color.RED);
-			btnJugador1.setBackground(Color.LIGHT_GRAY);
-			btnCPU1.setForeground(Color.WHITE);
-			btnCPU1.setBackground(Color.GRAY);
-			repaint();
-			
-		}else if (btnname.equals("btnjugador2") && CPUclick.elementAt(1).equals(1)) {
-			contadorCPU--;
+			namejugador2.setEditable(true);
 			namejugador2.setText("enter name");
-			btnJugador2.setForeground(Color.RED);
-			btnJugador2.setBackground(Color.LIGHT_GRAY);
-			btnCPU2.setForeground(Color.WHITE);
-			btnCPU2.setBackground(Color.GRAY);
 			repaint();
 			
-		}else if (btnname.equals("btnjugador3") && CPUclick.elementAt(2).equals(1)) {
+		}else if (btnname.equals("btnjugador3") || CPUclick[1].equals(false)) {
+			CPUclick[1] = true;
 			contadorCPU--;
+			namejugador3.setEditable(true);
 			namejugador3.setText("enter name");
-			btnJugador3.setForeground(Color.RED);
-			btnJugador3.setBackground(Color.LIGHT_GRAY);
-			btnCPU3.setForeground(Color.WHITE);
-			btnCPU3.setBackground(Color.GRAY);
 			repaint();
 			
-		}else if (btnname.equals("btnjugador4") && CPUclick.elementAt(3).equals(1)) {
+		}else if (btnname.equals("btnjugador4") || CPUclick[2].equals(false)) {
+			CPUclick[2] = true;
 			contadorCPU--;
+			namejugador4.setEditable(true);
 			namejugador4.setText("enter name");
-			btnJugador4.setForeground(Color.RED);
-			btnJugador4.setBackground(Color.LIGHT_GRAY);
-			btnCPU4.setForeground(Color.WHITE);
-			btnCPU4.setBackground(Color.GRAY);
 			repaint();
 			
-		}else if (btnname.equals("btnjugador5") && CPUclick.elementAt(4).equals(1)) {
+		}else if (btnname.equals("btnjugador5") || CPUclick[3].equals(false)) {
+			CPUclick[3] = true;
 			contadorCPU--;
+			namejugador5.setEditable(true);
 			namejugador5.setText("enter name");
-			btnJugador5.setForeground(Color.RED);
-			btnJugador5.setBackground(Color.LIGHT_GRAY);
-			btnCPU5.setForeground(Color.WHITE);
-			btnCPU5.setBackground(Color.GRAY);
 			repaint();
 			
-		}else if (btnname.equals("btnjugador6") && CPUclick.elementAt(5).equals(1)) {
+		}else if (btnname.equals("btnjugador6") || CPUclick[4].equals(false)) {
+			CPUclick[4] = true;
 			contadorCPU--;
+			namejugador6.setEditable(true);
 			namejugador6.setText("enter name");			
-			btnJugador6.setForeground(Color.RED);
-			btnJugador6.setBackground(Color.LIGHT_GRAY);
-			btnCPU6.setForeground(Color.WHITE);
-			btnCPU6.setBackground(Color.GRAY);
 			repaint();
 			
 		}
@@ -773,61 +741,42 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 	
 	
 	public void personajeCPU(String btnname) {
-		if (btnname.equals("btnCPU1") && CPUclick.elementAt(0).equals(0)) {
+		if (btnname.equals("btnCPU2") && CPUclick[0].equals(true)) {
+			CPUclick[0] = false;
 			contadorCPU++;
-			namejugador1.setText("CPU" + contadorCPU.toString());			
-			btnJugador1.setForeground(Color.WHITE);
-			btnJugador1.setBackground(Color.GRAY);
-			btnCPU1.setForeground(Color.RED);
-			btnCPU1.setBackground(Color.LIGHT_GRAY);
+			namejugador2.setText("CPU" + contadorCPU.toString());
+			namejugador2.setEditable(false);
 			repaint();
 			
-		}else if (btnname.equals("btnCPU2") && CPUclick.elementAt(1).equals(0)) {
+		}else if (btnname.equals("btnCPU3") && CPUclick[1].equals(true)) {
 			contadorCPU++;
-			namejugador2.setText("CPU" + contadorCPU.toString());			
-			btnJugador2.setForeground(Color.WHITE);
-			btnJugador2.setBackground(Color.GRAY);
-			btnCPU2.setForeground(Color.RED);
-			btnCPU2.setBackground(Color.LIGHT_GRAY);
+			namejugador3.setText("CPU" + contadorCPU.toString());
+			namejugador3.setEditable(false);
+			CPUclick[1] = false;
 			repaint();
 			
-		}else if (btnname.equals("btnCPU3") && CPUclick.elementAt(2).equals(0)) {
+		}else if (btnname.equals("btnCPU4") && CPUclick[2].equals(true)) {
 			contadorCPU++;
-			namejugador3.setText("CPU" + contadorCPU.toString());			
-			btnJugador3.setForeground(Color.WHITE);
-			btnJugador3.setBackground(Color.GRAY);
-			btnCPU3.setForeground(Color.RED);
-			btnCPU3.setBackground(Color.LIGHT_GRAY);
+			namejugador4.setText("CPU" + contadorCPU.toString());	
+			namejugador4.setEditable(false);
+			CPUclick[2] = false;
 			repaint();
 			
-		}else if (btnname.equals("btnCPU4") && CPUclick.elementAt(3).equals(0)) {
+		}else if (btnname.equals("btnCPU5") && CPUclick[3].equals(true)) {
 			contadorCPU++;
-			namejugador4.setText("CPU" + contadorCPU.toString());			
-			btnJugador4.setForeground(Color.WHITE);
-			btnJugador4.setBackground(Color.GRAY);
-			btnCPU4.setForeground(Color.RED);
-			btnCPU4.setBackground(Color.LIGHT_GRAY);
+			namejugador5.setText("CPU" + contadorCPU.toString());
+			namejugador5.setEditable(false);
+			CPUclick[3] = false;
 			repaint();
 			
-		}else if (btnname.equals("btnCPU5") && CPUclick.elementAt(4).equals(0)) {
+		}else if (btnname.equals("btnCPU6") && CPUclick[4].equals(true)) {
 			contadorCPU++;
-			namejugador5.setText("CPU" + contadorCPU.toString());			
-			btnJugador5.setForeground(Color.WHITE);
-			btnJugador5.setBackground(Color.GRAY);
-			btnCPU5.setForeground(Color.RED);
-			btnCPU5.setBackground(Color.LIGHT_GRAY);
+			namejugador6.setText("CPU" + contadorCPU.toString());	
+			namejugador6.setEditable(false);
+			CPUclick[4] = false;
 			repaint();
-			
-		}else if (btnname.equals("btnCPU6") && CPUclick.elementAt(5).equals(0)) {
-			contadorCPU++;
-			namejugador6.setText("CPU" + contadorCPU.toString());			
-			btnJugador6.setForeground(Color.WHITE);
-			btnJugador6.setBackground(Color.GRAY);
-			btnCPU6.setForeground(Color.RED);
-			btnCPU6.setBackground(Color.LIGHT_GRAY);
-			repaint();
-			
 		}
+		
 	}
 
 	@Override

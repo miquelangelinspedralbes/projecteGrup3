@@ -17,10 +17,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.CardLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import SaberYGanar.Partida;
+
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.ImageIcon;
 
 public class pantalla_jugadors extends JFrame {
 	private JPanel contentPane;
@@ -28,14 +32,14 @@ public class pantalla_jugadors extends JFrame {
 	public pantalla_jugadors() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 342, 379);
+		setBounds(100, 100, 348, 363);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{255, 0};
-		gbl_contentPane.rowHeights = new int[]{70, 76, 97, 62, 25, 0};
+		gbl_contentPane.rowHeights = new int[]{70, 58, 85, 70, 37, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
@@ -51,13 +55,16 @@ public class pantalla_jugadors extends JFrame {
 		gbc_lblJugadors.gridy = 0;
 		contentPane.add(lblJugadors, gbc_lblJugadors);
 		
-		JButton btnTornar = new JButton("Tornar");
+		JButton btnTornar = new JButton("");
+		btnTornar.setIcon(new ImageIcon(pantalla_jugadors.class.getResource("/img/return24.png")));
 		btnTornar.setForeground(Color.RED);
 		btnTornar.setBackground(Color.WHITE);
 		btnTornar.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent e) {
-		        new pantalla_principal().setVisible(true); 
+		        pantalla_principal pp = new pantalla_principal(); 
+		        pp.setVisible(true);
+		        pp.setLocationRelativeTo(null);
 		        dispose();
 		    }
 		});
@@ -73,21 +80,28 @@ public class pantalla_jugadors extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("98px"),
-				FormSpecs.DEFAULT_COLSPEC,
 				ColumnSpec.decode("149px"),},
 			new RowSpec[] {
-				RowSpec.decode("37px"),}));
+				RowSpec.decode("37px"),
+				FormSpecs.DEFAULT_ROWSPEC,}));
 		
-		JLabel lblNewLabel = new JLabel("0");
-		lblNewLabel.setForeground(Color.WHITE);
-		panel.add(lblNewLabel, "1, 1, right, fill");
-		
-		JButton btnVeureJugadors_1 = new JButton("Veure ");
+		JButton btnVeureJugadors_1 = new JButton("");
+		btnVeureJugadors_1.setBorder(null);
+		btnVeureJugadors_1.setIcon(new ImageIcon(pantalla_jugadors.class.getResource("/img/magnifying-glass32.png")));
+		btnVeureJugadors_1.setBackground(Color.DARK_GRAY);
 		btnVeureJugadors_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				 veureJugadors vj = new veureJugadors();
+				 vj.setVisible(true);
+			     vj.setLocationRelativeTo(null);
+		        dispose();
 			}
 		});
-		panel.add(btnVeureJugadors_1, "3, 1, fill, fill");
+		panel.add(btnVeureJugadors_1, "2, 1, fill, fill");
+		
+		JLabel lblNewLabel = new JLabel("veure");
+		lblNewLabel.setForeground(Color.WHITE);
+		panel.add(lblNewLabel, "2, 2, center, fill");
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.DARK_GRAY);
@@ -99,21 +113,27 @@ public class pantalla_jugadors extends JFrame {
 		contentPane.add(panel_1, gbc_panel_1);
 		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("98px"),
-				FormSpecs.DEFAULT_COLSPEC,
 				ColumnSpec.decode("149px"),},
 			new RowSpec[] {
-				RowSpec.decode("36px"),}));
+				RowSpec.decode("36px"),
+				RowSpec.decode("max(12dlu;default)"),}));
 		
-		JLabel lblNewLabel_1 = new JLabel("0");
+		JButton btnAfegirJugadors = new JButton("");
+		btnAfegirJugadors.setBorder(null);
+		btnAfegirJugadors.setForeground(Color.DARK_GRAY);
+		btnAfegirJugadors.setIcon(new ImageIcon(pantalla_jugadors.class.getResource("/img/plus-symbol-button32.png")));
+		btnAfegirJugadors.setBackground(Color.DARK_GRAY);
+		panel_1.add(btnAfegirJugadors, "2, 1, fill, fill");
+		
+		JLabel lblNewLabel_1 = new JLabel("afegir");
 		lblNewLabel_1.setForeground(Color.WHITE);
-		panel_1.add(lblNewLabel_1, "1, 1, right, default");
-		
-		JButton btnAfegirJugadors = new JButton("Afegir ");
-		panel_1.add(btnAfegirJugadors, "3, 1, fill, fill");
+		panel_1.add(lblNewLabel_1, "2, 2, center, fill");
 		btnAfegirJugadors.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent e) {
-		        new afegirJugadors().setVisible(true);
+		        afegirJugadors aj = new afegirJugadors();
+		        aj.setVisible(true);
+		        aj.setLocationRelativeTo(null);
 		        dispose();
 		    }
 		});
@@ -129,28 +149,32 @@ public class pantalla_jugadors extends JFrame {
 		contentPane.add(panel_2, gbc_panel_2);
 		panel_2.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("98px"),
-				FormSpecs.DEFAULT_COLSPEC,
 				ColumnSpec.decode("149px"),},
 			new RowSpec[] {
-				RowSpec.decode("40px"),}));
+				RowSpec.decode("40px"),
+				RowSpec.decode("max(12dlu;default)"),}));
 		
-		JLabel lblNewLabel_2 = new JLabel("0");
+		JButton btnEliminarJugadors = new JButton("");
+		btnEliminarJugadors.setBorder(null);
+		btnEliminarJugadors.setIcon(new ImageIcon(pantalla_jugadors.class.getResource("/img/remove32.png")));
+		btnEliminarJugadors.setBackground(Color.DARK_GRAY);
+		panel_2.add(btnEliminarJugadors, "2, 1, fill, fill");
+		
+		JLabel lblNewLabel_2 = new JLabel("eliminar");
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setBackground(Color.WHITE);
-		panel_2.add(lblNewLabel_2, "1, 1, right, default");
-		
-		JButton btnEliminarJugadors = new JButton("Eliminar ");
-		panel_2.add(btnEliminarJugadors, "3, 1, fill, fill");
+		panel_2.add(lblNewLabel_2, "2, 2, center, center");
 		btnEliminarJugadors.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent e) {
-		        new eliminarJugadors().setVisible(true);
+		        eliminarJugadors ej = new eliminarJugadors();
+		        ej.setVisible(true);
+		        ej.setLocationRelativeTo(null);
 		        dispose();
 		    }
 		});
 		GridBagConstraints gbc_btnTornar = new GridBagConstraints();
-		gbc_btnTornar.anchor = GridBagConstraints.NORTH;
-		gbc_btnTornar.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnTornar.fill = GridBagConstraints.BOTH;
 		gbc_btnTornar.gridx = 0;
 		gbc_btnTornar.gridy = 4;
 		contentPane.add(btnTornar, gbc_btnTornar);

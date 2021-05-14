@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import BDD.BaseDeDatosOrientadaObjetos;
 import BDD.conexionBD;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
@@ -34,6 +37,7 @@ public class pantalla_principal extends JFrame {
 				try {
 					pantalla_principal frame = new pantalla_principal();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,6 +49,7 @@ public class pantalla_principal extends JFrame {
 	 * Create the frame.
 	 */
 	public pantalla_principal() {
+		
 		setTitle("principal_grup3");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 398, 430);
@@ -113,6 +118,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
 				pSelec.setVisible(true);
+				pSelec.setLocationRelativeTo(null);
 
 			}
 		});
@@ -153,6 +159,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				 informes informe = new informes();
 				informe.setVisible(true);
+				informe.setLocationRelativeTo(null);
 				dispose();
 			}
 		});
@@ -193,6 +200,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				historic h = new historic();
 				h.setVisible(true);
+				h.setLocationRelativeTo(null);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
@@ -230,6 +238,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				pantalla_jugadors pj = new pantalla_jugadors();
 				pj.setVisible(true);
+				pj.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton_3.setBackground(Color.WHITE);
@@ -266,7 +275,9 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton_4 = new JButton("Opcions");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				conexionBD.conectar();
+				JOptionPane.showMessageDialog(contentPane, "Volcado de preguntas a base de datos orientada a objetos");
+				BaseDeDatosOrientadaObjetos objetos = new BaseDeDatosOrientadaObjetos();
+				objetos.volcado();
 			}
 		});
 		btnNewButton_4.setBackground(Color.WHITE);

@@ -17,12 +17,15 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
+import javax.swing.JButton;
 
 public class ranquingFinal extends JFrame {
 
@@ -38,16 +41,16 @@ public class ranquingFinal extends JFrame {
 		selec.selecRanquing(idUltimaPartida);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 359, 362);
+		setBounds(100, 100, 355, 418);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{340, 0};
-		gbl_contentPane.rowHeights = new int[]{54, 17, 32, 32, 32, 32, 32, 32, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowHeights = new int[]{54, 17, 32, 32, 32, 32, 32, 47, 52, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Ránquing ");
@@ -210,6 +213,7 @@ public class ranquingFinal extends JFrame {
 		JPanel posicio6 = new JPanel();
 		posicio6.setBackground(Color.DARK_GRAY);
 		GridBagConstraints gbc_posicio6 = new GridBagConstraints();
+		gbc_posicio6.insets = new Insets(0, 0, 5, 0);
 		gbc_posicio6.fill = GridBagConstraints.BOTH;
 		gbc_posicio6.gridx = 0;
 		gbc_posicio6.gridy = 7;
@@ -234,6 +238,56 @@ public class ranquingFinal extends JFrame {
 		JLabel puntosjug6 = new JLabel("500");
 		puntosjug6.setForeground(Color.GRAY);
 		posicio6.add(puntosjug6);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 8;
+		contentPane.add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{170, 171, 0};
+		gbl_panel.rowHeights = new int[]{45, 0};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JButton btnNewButton = new JButton("Sortir");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.RED);
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton.gridx = 0;
+		gbc_btnNewButton.gridy = 0;
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+		    public void actionPerformed(ActionEvent e) {
+		        pantalla_principal pp = new pantalla_principal();
+		        pp.setVisible(true);
+		        pp.setLocationRelativeTo(null);
+		        dispose();
+		    }
+		});
+		panel.add(btnNewButton, gbc_btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Nova Partida");
+		btnNewButton_1.setForeground(Color.RED);
+		btnNewButton_1.setBackground(Color.WHITE);
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
+		gbc_btnNewButton_1.gridx = 1;
+		gbc_btnNewButton_1.gridy = 0;
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
+				pSelec.setVisible(true);
+		        pSelec.setLocationRelativeTo(null);
+
+			}
+		});
+		panel.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 		if (totaljugadors.equals(1) ) {
 			posicio1.setVisible(true);

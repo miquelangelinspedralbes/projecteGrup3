@@ -108,7 +108,9 @@ public class afegirJugadors extends JFrame implements ActionListener{
 		btnTornar.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent e) {
-		        new pantalla_jugadors().setVisible(true);
+		        pantalla_jugadors pj = new pantalla_jugadors();
+		        pj.setVisible(true);
+		        pj.setLocationRelativeTo(null);
 		        dispose();
 		    }
 		});
@@ -118,7 +120,9 @@ public class afegirJugadors extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		inser.insertJugadors(txtNom.getText());
 		JOptionPane.showMessageDialog(contentPane, "Jugador insertado correctamente.");
-		new pantalla_jugadors().setVisible(true);
+		pantalla_jugadors pj = new pantalla_jugadors();
+        pj.setVisible(true);
+        pj.setLocationRelativeTo(null);
         dispose();
 		
 	}

@@ -50,19 +50,19 @@ public class pantalla_preguntes_mates extends JFrame {
 		
 		setTitle("pregunta");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 368, 373);
+		setBounds(100, 100, 406, 425);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{358, 0};
-		gbl_contentPane.rowHeights = new int[]{33, 17, 135, 0, 33, 51, 43, 0};
+		gbl_contentPane.rowHeights = new int[]{45, 53, 117, 0, 33, 51, 22, 43, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel Lbl_mates_title = new JLabel("Responde a la pregunta de mates: " + nombre);
+		JLabel Lbl_mates_title = new JLabel("<dynamic>");
 		Lbl_mates_title.setForeground(Color.RED);
 		Lbl_mates_title.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_Lbl_mates_title = new GridBagConstraints();
@@ -71,15 +71,21 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_Lbl_mates_title.gridy = 0;
 		contentPane.add(Lbl_mates_title, gbc_Lbl_mates_title);
 		
-		JSeparator separator = new JSeparator();
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.insets = new Insets(0, 0, 5, 0);
-		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 1;
-		contentPane.add(separator, gbc_separator);
+		JLabel lblRespondeALa = new JLabel("Respón a la pregunta de mates: ");
+		lblRespondeALa.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblRespondeALa.setForeground(Color.RED);
+		GridBagConstraints gbc_lblRespondeALa = new GridBagConstraints();
+		gbc_lblRespondeALa.fill = GridBagConstraints.VERTICAL;
+		gbc_lblRespondeALa.insets = new Insets(0, 0, 5, 0);
+		gbc_lblRespondeALa.gridx = 0;
+		gbc_lblRespondeALa.gridy = 1;
+		contentPane.add(lblRespondeALa, gbc_lblRespondeALa);
 		
 		JTextPane txtpnPreguntaSobreMatematiques = new JTextPane();
-		txtpnPreguntaSobreMatematiques.setText("pregunta sobre matematiques, calcula el resultat del segúent problema:\n\n " + math.getEnunciado() + "\n\n");
+		txtpnPreguntaSobreMatematiques.setFont(new Font("Dialog", Font.PLAIN, 18));
+		txtpnPreguntaSobreMatematiques.setBackground(Color.DARK_GRAY);
+		txtpnPreguntaSobreMatematiques.setForeground(Color.WHITE);
+		txtpnPreguntaSobreMatematiques.setText("Calcula el resultat del segúent problema:\n\n <dynamic>\n\n");
 		GridBagConstraints gbc_txtpnPreguntaSobreMatematiques = new GridBagConstraints();
 		gbc_txtpnPreguntaSobreMatematiques.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaSobreMatematiques.fill = GridBagConstraints.BOTH;
@@ -94,8 +100,8 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_separator_1.gridy = 3;
 		contentPane.add(separator_1, gbc_separator_1);
 		
-		JLabel lblrespostaMates = new JLabel("  Introdueix el resultat correcte aqui: ");
-		lblrespostaMates.setForeground(Color.WHITE);
+		JLabel lblrespostaMates = new JLabel("  Introdueix el resultat: ");
+		lblrespostaMates.setForeground(Color.LIGHT_GRAY);
 		GridBagConstraints gbc_lblrespostaMates = new GridBagConstraints();
 		gbc_lblrespostaMates.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_lblrespostaMates.insets = new Insets(0, 0, 5, 0);
@@ -104,7 +110,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		contentPane.add(lblrespostaMates, gbc_lblrespostaMates);
 		
 		
-		JButton btnEnviarRespostaMates = new JButton("Respon");
+		JButton btnEnviarRespostaMates = new JButton("Respón");
 		btnEnviarRespostaMates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();
@@ -114,9 +120,11 @@ public class pantalla_preguntes_mates extends JFrame {
 				if(resultado == math.getResultado()) {
 					pregunta_correcte pc = new pregunta_correcte();
 					pc.setVisible(true);
+					pc.setLocationRelativeTo(null);
 				}else {
 					pregunta_incorrecte pi = new pregunta_incorrecte(String.valueOf(math.getResultado()));
 					pi.setVisible(true);
+					pi.setLocationRelativeTo(null);
 				}		
 			}
 		});
@@ -132,10 +140,9 @@ public class pantalla_preguntes_mates extends JFrame {
 		btnEnviarRespostaMates.setBackground(Color.WHITE);
 		btnEnviarRespostaMates.setForeground(Color.RED);
 		GridBagConstraints gbc_btnEnviarRespostaMates = new GridBagConstraints();
-		gbc_btnEnviarRespostaMates.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnEnviarRespostaMates.anchor = GridBagConstraints.SOUTH;
+		gbc_btnEnviarRespostaMates.fill = GridBagConstraints.BOTH;
 		gbc_btnEnviarRespostaMates.gridx = 0;
-		gbc_btnEnviarRespostaMates.gridy = 6;
+		gbc_btnEnviarRespostaMates.gridy = 7;
 		contentPane.add(btnEnviarRespostaMates, gbc_btnEnviarRespostaMates);
 		
 		addWindowListener((WindowListener) new WindowAdapter() {

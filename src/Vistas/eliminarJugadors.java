@@ -107,7 +107,9 @@ public class eliminarJugadors extends JFrame implements ActionListener {
 		btnTornar.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent e) {
-		        new pantalla_jugadors().setVisible(true);
+		    	pantalla_jugadors pj = new pantalla_jugadors();
+		        pj.setVisible(true);
+		        pj.setLocationRelativeTo(null);
 		        dispose();
 		    }
 		});
@@ -121,7 +123,9 @@ public class eliminarJugadors extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(contentPane, "Jugador eliminado correctamente.");
 		else
 			JOptionPane.showMessageDialog(contentPane, "Jugador no encontrado.");
-		new pantalla_jugadors().setVisible(true);
+		pantalla_jugadors pj = new pantalla_jugadors();
+        pj.setVisible(true);
+        pj.setLocationRelativeTo(null);
 		dispose();
 		
 	}
