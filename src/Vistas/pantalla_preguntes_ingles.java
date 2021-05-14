@@ -106,22 +106,50 @@ public class pantalla_preguntes_ingles extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		String[] respuesta = ingles.getRespuestas().split("\\|");
-		JRadioButton rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
+		int orden = (int) (Math.random()*6);
+		JRadioButton rdbtnNewRadioButton = null;
+		JRadioButton rdbtnNewRadioButton_1 = null;
+		JRadioButton rdbtnNewRadioButton_3 = null;
+		JRadioButton rdbtnNewRadioButton_2 = null;
+		if(orden == 0) {	
+			rdbtnNewRadioButton = new JRadioButton(respuesta[1]);
+			rdbtnNewRadioButton_1 = new JRadioButton(respuesta[2]);
+			rdbtnNewRadioButton_3 = new JRadioButton(respuesta[3]);
+			rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
+		}else if(orden == 1) {
+			rdbtnNewRadioButton = new JRadioButton(respuesta[2]);
+			rdbtnNewRadioButton_1 = new JRadioButton(respuesta[3]);
+			rdbtnNewRadioButton_3 = new JRadioButton(respuesta[4]);
+			rdbtnNewRadioButton_2 = new JRadioButton(respuesta[1]);
+		}else if(orden == 2) {
+			rdbtnNewRadioButton = new JRadioButton(respuesta[3]);
+			rdbtnNewRadioButton_1 = new JRadioButton(respuesta[4]);
+			rdbtnNewRadioButton_3 = new JRadioButton(respuesta[1]);
+			rdbtnNewRadioButton_2 = new JRadioButton(respuesta[2]);
+		}else if(orden == 3) {
+			rdbtnNewRadioButton = new JRadioButton(respuesta[4]);
+			rdbtnNewRadioButton_1 = new JRadioButton(respuesta[1]);
+			rdbtnNewRadioButton_3 = new JRadioButton(respuesta[2]);
+			rdbtnNewRadioButton_2 = new JRadioButton(respuesta[3]);
+		}else {
+			rdbtnNewRadioButton = new JRadioButton(respuesta[2]);
+			rdbtnNewRadioButton_1 = new JRadioButton(respuesta[3]);
+			rdbtnNewRadioButton_3 = new JRadioButton(respuesta[1]);
+			rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
+		}
+		
 		rdbtnNewRadioButton.setForeground(Color.WHITE);
 		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
 		panel.add(rdbtnNewRadioButton);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton(respuesta[2]);
 		rdbtnNewRadioButton_1.setBackground(Color.DARK_GRAY);
 		rdbtnNewRadioButton_1.setForeground(Color.WHITE);
 		panel.add(rdbtnNewRadioButton_1);
 		
-		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton(respuesta[3]);
 		rdbtnNewRadioButton_3.setBackground(Color.DARK_GRAY);
 		rdbtnNewRadioButton_3.setForeground(Color.WHITE);
 		panel.add(rdbtnNewRadioButton_3);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton(respuesta[4]);
 		rdbtnNewRadioButton_2.setForeground(Color.WHITE);
 		rdbtnNewRadioButton_2.setBackground(Color.DARK_GRAY);
 		panel.add(rdbtnNewRadioButton_2);

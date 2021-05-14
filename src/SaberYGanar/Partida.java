@@ -5,18 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 import BDD.Inserts;
 import BDD.Selects;
@@ -31,10 +28,8 @@ import Vistas.ranquingFinal;
 import Vistas.selecRonda;
 
 public class Partida {
-	static int numRondas;
 	static int rondaActual = 0;
 	private ArrayList<String> numsJugadors = new ArrayList<String>();
-	private static Scanner sc = new Scanner(System.in);
 	static ArrayList<Integer> alreadyUsedNumbers = new ArrayList<>();
 	static Random random = new Random();
 	static int idUltimaPartida = 0;
@@ -47,7 +42,8 @@ public class Partida {
 	public static boolean aux = false, esCPU = false;
 	public static Inserts inser = new Inserts();
 	public static Selects selec = new Selects();
-	static int maxCPU = 0, contadorCPU = 0;
+	int maxCPU = 0;
+	static int contadorCPU = 0;
 	static conexionBD bdd = new conexionBD();
 	static Connection conexion = bdd.obtenerConexion();
 	static ArrayList<Integer> puntos = new ArrayList<Integer>();
@@ -61,7 +57,6 @@ public class Partida {
 			idUltimaPartida = selec.selecMaxPartida();
 			
 			int i = 0;
-			this.numRondas = numRondas;
 			
 			while (alreadyUsedNumbers.size()<nombreJugadores.length) {
 				
@@ -290,19 +285,16 @@ public class Partida {
 
     public static Map<String, Integer> getPuntuacions() throws SQLException{
         String nom;
+        ArrayList<String> nombres = new ArrayList<String>();
         int puntuacio;
         Statement stmt = conexion.createStatement();
-        Statement stmt22 = conexion.createStatement();
-        ResultSet stmt2 = null;
-        ResultSet set = stmt.executeQuery("SELECT nombreJugador FROM JUEGAN WHERE idPartida = " + idUltimaPartida);
+        nombres = selec.selecNomsPartida(idUltimaPartida);
        
         Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
 
-        for(int i=0;set.next();i++) {
-            nom =  set.getString(1);
-            stmt2 = stmt22.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = '" + nom + "' && idPartida = " + idUltimaPartida);
-            stmt2.next();
-            puntuacio = stmt2.getInt(1);
+        for(int i=0;i<nombres.size();i++) {
+            nom =  nombres.get(i);
+            puntuacio = selec.sumPuntos(idUltimaPartida, nom);
             Puntuacions.put(nom, puntuacio);
         }
         return Puntuacions;

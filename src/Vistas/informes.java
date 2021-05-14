@@ -46,7 +46,7 @@ public class informes extends JFrame{
 		{
 		    public void actionPerformed(ActionEvent e) {
 		    	try {
-	    	        File arxiu = new File("src/reports/ranquingPreguntas.pdf");
+	    	        File arxiu = new File("src/reports/ranquingJugadores.pdf");
 	    	        if(arxiu.exists()) {
 	    	        	if(Desktop.isDesktopSupported()) {
 	    	        		Desktop.getDesktop().open(arxiu);

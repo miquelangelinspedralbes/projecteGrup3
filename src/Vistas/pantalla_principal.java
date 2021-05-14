@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import BDD.BaseDeDatosOrientadaObjetos;
 import BDD.conexionBD;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
@@ -266,7 +269,9 @@ public class pantalla_principal extends JFrame {
 		JButton btnNewButton_4 = new JButton("Opcions");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				conexionBD.conectar();
+				JOptionPane.showMessageDialog(contentPane, "Volcado de preguntas a base de datos orientada a objetos");
+				BaseDeDatosOrientadaObjetos objetos = new BaseDeDatosOrientadaObjetos();
+				objetos.volcado();
 			}
 		});
 		btnNewButton_4.setBackground(Color.WHITE);

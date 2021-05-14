@@ -40,8 +40,6 @@ public class ranquing extends JFrame {
 
 	private JPanel contentPane;
 	public Integer totaljugadors;
-	static conexionBD bd = new conexionBD();
-	static Connection conexion = bd.obtenerConexion();
 	Selects selec = new Selects();
 	/**
 	 * Create the frame.
@@ -327,19 +325,19 @@ public class ranquing extends JFrame {
 			puntosjug1.setText(String.valueOf(puntos.get(0)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
-			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
-			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
 			posicio4.setVisible(true);
 			nomjug4.setText(nombre4);
-			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
+			puntosjug4.setText(String.valueOf(puntos.get(3)));
 			posicio5.setVisible(true);
 			nomjug5.setText(nombre5);
-			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
+			puntosjug5.setText(String.valueOf(puntos.get(4)));
 			posicio6.setVisible(true);
 			nomjug6.setText(nombre6);
-			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
+			puntosjug6.setText(String.valueOf(puntos.get(5)));
 		}
 		
 		addWindowListener((WindowListener) new WindowAdapter() {

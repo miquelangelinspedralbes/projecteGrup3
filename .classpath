@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="src/conector/mysql-connector-java-8.0.23.jar"/>
 	<classpathentry kind="lib" path="C:/Users/joseg/Documents/Java/projecteGrup3/jgoodies-common-1.8.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/joseg/Documents/Java/projecteGrup3/jgoodies-forms-1.9.0.jar"/>
+	<classpathentry kind="lib" path="src/objectdb-2.8.5/bin/objectdb.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
