@@ -119,6 +119,7 @@ public class pantalla_principal extends JFrame {
 				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
 				pSelec.setVisible(true);
 				pSelec.setLocationRelativeTo(null);
+				dispose();
 
 			}
 		});
@@ -201,6 +202,7 @@ public class pantalla_principal extends JFrame {
 				historic h = new historic();
 				h.setVisible(true);
 				h.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
@@ -239,6 +241,7 @@ public class pantalla_principal extends JFrame {
 				pantalla_jugadors pj = new pantalla_jugadors();
 				pj.setVisible(true);
 				pj.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
 		btnNewButton_3.setBackground(Color.WHITE);

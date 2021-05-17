@@ -60,8 +60,6 @@ public class Partida {
 			inser.inserPartida();
 			inser.commit();
 			idUltimaPartida = selec.selecMaxPartida();
-			System.out.println(contadorCPU);
-			System.out.println(nombreJugadores.length);
 			int i = 0;
 			this.numRondas = numRondas;
 			
@@ -78,7 +76,6 @@ public class Partida {
 				}
 			}
 			for (int j = 0; j < numsJugadors.size(); j++) {
-				System.out.println("Puesto:" + j + " para: " + numsJugadors.get(j));
 				if (j == 0) {
 					nombre1 = numsJugadors.get(j);
 				}else if(j == 1) {
@@ -286,50 +283,47 @@ public class Partida {
 				jugadoresJugado++;
 		}
 	
-	public void actualitzarHistoric() throws SQLException, IOException {
-        Map<String, Integer> unsortedMap = getPuntuacions();
+		public void actualitzarHistoric() throws SQLException, IOException {
+	        Map<String, Integer> unsortedMap = getPuntuacions();
 
-        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+	        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
 
-        unsortedMap.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
-            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-        String puntuacionsstr = sortedMap.toString();
-        puntuacionsstr= puntuacionsstr.replace("{","");
-        puntuacionsstr= puntuacionsstr.replace("="," ");
-        puntuacionsstr= puntuacionsstr.replace(",","");
-        puntuacionsstr= puntuacionsstr.replace("}","");
-        File arxhistoric = new File("historic.txt");
-        if(!arxhistoric.exists()){
-            arxhistoric.createNewFile();
-        }
-        FileWriter fw = new FileWriter(arxhistoric,true);
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(puntuacionsstr);
-        bw.write("\n");
-        bw.close();
-        fw.close();
-    }
+	        unsortedMap.entrySet().stream()
+	            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
+	            .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+	        String puntuacionsstr = sortedMap.toString();
+	        puntuacionsstr= puntuacionsstr.replace("{","");
+	        puntuacionsstr= puntuacionsstr.replace("="," ");
+	        puntuacionsstr= puntuacionsstr.replace(",","");
+	        puntuacionsstr= puntuacionsstr.replace("}","");
+	        File arxhistoric = new File("historic.txt");
+	        if(!arxhistoric.exists()){
+	            arxhistoric.createNewFile();
+	        }
+	        FileWriter fw = new FileWriter(arxhistoric,true);
+	        BufferedWriter bw = new BufferedWriter(fw);
+	        bw.write(puntuacionsstr);
+	        bw.write("\n");
+	        bw.close();
+	        fw.close();
+	    }
 
-    public static Map<String, Integer> getPuntuacions() throws SQLException{
-        String nom;
-        int puntuacio;
-        Statement stmt = conexion.createStatement();
-        Statement stmt22 = conexion.createStatement();
-        ResultSet stmt2 = null;
-        ResultSet set = stmt.executeQuery("SELECT nombreJugador FROM JUEGAN WHERE idPartida = " + idUltimaPartida);
-       
-        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
+	    public static Map<String, Integer> getPuntuacions() throws SQLException{
+	        String nom;
+	        ArrayList<String> nombres = new ArrayList<String>();
+	        int puntuacio;
+	        Statement stmt = conexion.createStatement();
+	        nombres = selec.selecNomsPartida(idUltimaPartida);
+	       
+	        Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
 
-        for(int i=0;set.next();i++) {
-            nom =  set.getString(1);
-            stmt2 = stmt22.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = '" + nom + "' && idPartida = " + idUltimaPartida);
-            stmt2.next();
-            puntuacio = stmt2.getInt(1);
-            Puntuacions.put(nom, puntuacio);
-        }
-        return Puntuacions;
-    }
+	        for(int i=0;i<nombres.size();i++) {
+	            nom =  nombres.get(i);
+	            puntuacio = selec.sumPuntos(idUltimaPartida, nom);
+	            Puntuacions.put(nom, puntuacio);
+	        }
+	        return Puntuacions;
+	    }
     
     public void jugarCPU() {
    		
