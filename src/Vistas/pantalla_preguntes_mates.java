@@ -62,7 +62,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel Lbl_mates_title = new JLabel("<dynamic>");
+		JLabel Lbl_mates_title = new JLabel(nombre);
 		Lbl_mates_title.setForeground(Color.RED);
 		Lbl_mates_title.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_Lbl_mates_title = new GridBagConstraints();
@@ -71,7 +71,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		gbc_Lbl_mates_title.gridy = 0;
 		contentPane.add(Lbl_mates_title, gbc_Lbl_mates_title);
 		
-		JLabel lblRespondeALa = new JLabel("Respón a la pregunta de mates: ");
+		JLabel lblRespondeALa = new JLabel("Respon a la pregunta de mates: ");
 		lblRespondeALa.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblRespondeALa.setForeground(Color.RED);
 		GridBagConstraints gbc_lblRespondeALa = new GridBagConstraints();
@@ -85,7 +85,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		txtpnPreguntaSobreMatematiques.setFont(new Font("Dialog", Font.PLAIN, 18));
 		txtpnPreguntaSobreMatematiques.setBackground(Color.DARK_GRAY);
 		txtpnPreguntaSobreMatematiques.setForeground(Color.WHITE);
-		txtpnPreguntaSobreMatematiques.setText("Calcula el resultat del segúent problema:\n\n <dynamic>\n\n");
+		txtpnPreguntaSobreMatematiques.setText("Calcula el resultat del seguent problema:\n\n " + selec.selecEcuacioMates(numRandom) + "\n\n");
 		GridBagConstraints gbc_txtpnPreguntaSobreMatematiques = new GridBagConstraints();
 		gbc_txtpnPreguntaSobreMatematiques.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaSobreMatematiques.fill = GridBagConstraints.BOTH;
@@ -110,7 +110,7 @@ public class pantalla_preguntes_mates extends JFrame {
 		contentPane.add(lblrespostaMates, gbc_lblrespostaMates);
 		
 		
-		JButton btnEnviarRespostaMates = new JButton("Respón");
+		JButton btnEnviarRespostaMates = new JButton("Respon");
 		btnEnviarRespostaMates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String respuesta = textField.getText();

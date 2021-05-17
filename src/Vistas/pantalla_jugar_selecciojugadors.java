@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -609,7 +610,7 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 		jugarbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int ronda = 3;
-				String[] nombreJugadores = new String[contadorjugadors];
+				ArrayList<String> nombre = new ArrayList<String>();
 				if (partida.equals("Partida Curta")) {
 					ronda = 3;
 				} else if (partida.equals("Partida Normal")) {
@@ -619,18 +620,28 @@ public class pantalla_jugar_selecciojugadors extends JFrame implements ActionLis
 				}
 				for (int i = 0; i < contadorjugadors; i++) {
 					if (i == 0) {
-						nombreJugadores[i] = namejugador1.getText();
+						nombre.add(namejugador1.getText());
 					} else if (i == 1) {
-						nombreJugadores[i] = namejugador2.getText();
+						if(!namejugador2.getText().contains("CPU"))
+							nombre.add(namejugador2.getText());
 					} else if (i == 2) {
-						nombreJugadores[i] = namejugador3.getText();
+						if(!namejugador3.getText().contains("CPU"))
+							nombre.add(namejugador3.getText());
 					} else if (i == 3) {
-						nombreJugadores[i] = namejugador4.getText();
+						if(!namejugador4.getText().contains("CPU"))
+							nombre.add(namejugador4.getText());
 					} else if (i == 4) {
-						nombreJugadores[i] = namejugador5.getText();
+						if(!namejugador5.getText().contains("CPU"))
+							nombre.add(namejugador5.getText());
 					} else{
-						nombreJugadores[i] = namejugador6.getText();
+						if(!namejugador6.getText().contains("CPU"))
+							nombre.add(namejugador6.getText());
 					}
+				}
+				String[] nombreJugadores = new String[nombre.size()];
+				nombreJugadores = nombre.toArray(nombreJugadores);
+				for(int i = 0; i<nombreJugadores.length;i++) {
+					System.out.println(nombreJugadores[i]);
 				}
 				dispose();
 				Partida p = new Partida(ronda, contadorjugadors, nombreJugadores, contadorCPU);	

@@ -54,7 +54,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel Lbl_lletres_title = new JLabel("<dynamic>");
+		JLabel Lbl_lletres_title = new JLabel(nombre);
 		Lbl_lletres_title.setForeground(Color.RED);
 		Lbl_lletres_title.setFont(new Font("Loma", Font.BOLD, 19));
 		GridBagConstraints gbc_Lbl_lletres_title = new GridBagConstraints();
@@ -94,7 +94,7 @@ public class pantalla_preguntes_lletres extends JFrame {
 		txtpnPreguntaLletres.setBackground(Color.DARK_GRAY);
 		txtpnPreguntaLletres.setForeground(Color.WHITE);
 		txtpnPreguntaLletres.setFont(new Font("Dialog", Font.PLAIN, 18));
-		txtpnPreguntaLletres.setText("<dynamic>\n");
+		txtpnPreguntaLletres.setText(selec.selecOcultaLetras(numRandom));
 		GridBagConstraints gbc_txtpnPreguntaLletres = new GridBagConstraints();
 		gbc_txtpnPreguntaLletres.insets = new Insets(0, 0, 5, 0);
 		gbc_txtpnPreguntaLletres.fill = GridBagConstraints.VERTICAL;

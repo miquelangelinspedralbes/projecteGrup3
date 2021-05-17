@@ -35,7 +35,6 @@ public class Partida {
 	static int numRondas;
 	static int rondaActual = 0;
 	private ArrayList<String> numsJugadors = new ArrayList<String>();
-	private static Scanner sc = new Scanner(System.in);
 	static ArrayList<Integer> alreadyUsedNumbers = new ArrayList<>();
 	static Random random = new Random();
 	static int idUltimaPartida = 0;
@@ -51,16 +50,18 @@ public class Partida {
 	static int maxCPU = 0, contadorCPU = 0;
 	static conexionBD bdd = new conexionBD();
 	static Connection conexion = bdd.obtenerConexion();
-	static ArrayList<Integer> puntos = new ArrayList<Integer>();
+	static ArrayList<Integer> puntos = new ArrayList<Integer>(), puntosCPU = new ArrayList<Integer>();
 		
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {			
-			numeroDeJugadores = numJugador;
+			numeroDeJugadores = numJugador - contadorCPU;
 			numeroDeRondas = numRondas;
 			maxCPU = contadorCPU;
 			
 			inser.inserPartida();
+			inser.commit();
 			idUltimaPartida = selec.selecMaxPartida();
-			
+			System.out.println(contadorCPU);
+			System.out.println(nombreJugadores.length);
 			int i = 0;
 			this.numRondas = numRondas;
 			
@@ -105,6 +106,7 @@ public class Partida {
 				}else {
 					CPU5 = "CPU5";
 				}
+				puntosCPU.add(0);
 			}
 			
 				pasarRondas();
@@ -203,15 +205,15 @@ public class Partida {
 		}
 		
 		public void sumarPuntos(boolean respuesta) {
-			int punto = 0;
-			if (respuesta) {
-				punto = 1;
-				int puntoAnterior=puntos.get(jugadoresJugado-1) + 1;
-				puntos.set(jugadoresJugado-1, puntoAnterior);
-			}else
-				punto = 0;
-			String nombre = null;
 			if(!esCPU) {		
+				int punto = 0;
+				if (respuesta) {
+					punto = 1;
+					int puntoAnterior=puntos.get(jugadoresJugado-1);
+					puntoAnterior++;
+					puntos.set(jugadoresJugado-1, puntoAnterior);
+				}
+				String nombre = null;
 				if (jugadoresJugado == 1) {
 					nombre = nombre1;
 				}else if(jugadoresJugado == 2) {
@@ -230,13 +232,23 @@ public class Partida {
 					aux = true;
 				}
 				inser.insertJuegan(rondaActual+1, idUltimaPartida, nombre, numRandom, punto, respuesta);
+			}else {
+				int punto = 0;
+				if (respuesta) {
+					punto = 1;
+					int puntoAnterior=puntosCPU.get(contadorCPU-1);
+					puntoAnterior++;
+					puntos.set(contadorCPU-1, puntoAnterior);
+				}
 			}
 			
 			if (jugadoresJugado == numeroDeJugadores) {
 				if(jugadoresJugado == numeroDeJugadores && contadorCPU != maxCPU) {
 					esCPU = true;
-				}else
+				}else {
+					contadorCPU = 0;
 					esCPU = false;
+				}
 				if(esCPU) {	
 					jugarCPU();
 				}
@@ -245,7 +257,7 @@ public class Partida {
 					rondaActual++;
 					aux = false;
 					if(rondaActual != numeroDeRondas) {
-						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos);
+						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos, puntosCPU, CPU1, CPU2, CPU3, CPU4, CPU5);
 						r.setVisible(true);
 						r.setLocationRelativeTo(null);
 					}
@@ -320,14 +332,10 @@ public class Partida {
     }
     
     public void jugarCPU() {
-   		if(contadorCPU == maxCPU) {
-   			esCPU = false;
-   			contadorCPU = 0;
-   		}
-   		else {
-   			contadorCPU++;
-    		pasarRondas();
-    	}    			
+   		
+   		contadorCPU++;
+    	pasarRondas();
+    	   			
     }
     
     public void rollBack() {

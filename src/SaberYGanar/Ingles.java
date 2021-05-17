@@ -1,7 +1,12 @@
 package SaberYGanar;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import BDD.Selects;
 
+@Entity
+@Table(name = "Ingles")
 public class Ingles extends Preguntas {
 	static Selects selec = new Selects();
 	String respuestaCorrecta, respuestas;
@@ -11,6 +16,10 @@ public class Ingles extends Preguntas {
 		this.respuestaCorrecta = selec.selecRespuestasCorrectaIngles(enunciado);
 		this.respuestas = selec.selecRespuestasIngles(numRandom);
 	}
+	
+	public Ingles() {
+		
+	}
 
 	public String getRespuestaCorrecta() {
 		return respuestaCorrecta;
@@ -18,6 +27,10 @@ public class Ingles extends Preguntas {
 
 	public String getRespuestas() {
 		return respuestas;
+	}
+
+	public void setRespuestas(String respuestas) {
+		this.respuestas = respuestas;
 	}
 	
 	

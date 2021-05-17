@@ -2,3 +2,7 @@ enter name 2enter name 1
 enter name 0
 enter name 0
 enter name 2 enter 1
+enter name 2 enter 1
+enter name 2 enter 1
+enter name 1 enter 0
+enter name 1

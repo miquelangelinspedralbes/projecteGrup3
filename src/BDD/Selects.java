@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class Selects {
+	static int numRandom;
 	public ArrayList<String> nombre = new ArrayList<String>();
 	public ArrayList<Integer> puntos = new ArrayList<Integer>();
 	
@@ -33,6 +34,20 @@ public class Selects {
 			e.printStackTrace();
 		}
 		return idUltimaPartida;
+	}
+	
+	public int selecMaxPregunta() {
+		int idUltimaPregunta = 0;
+		try {
+			stmt = conexion.createStatement();
+			rs = stmt.executeQuery("SELECT MAX(id) FROM PREGUNTAS");
+			rs.next();
+			idUltimaPregunta = rs.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idUltimaPregunta;
 	}
 	
 	public int selecCountIngles() {
@@ -87,6 +102,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			numRandom = (int) (Math.random()*(selecCountLetras()-(selecCountIngles()+1)+1)+(selecCountIngles()+1));
+			selecEcuacioMates(numRandom);
 		}
 		return oculta;
 	}
@@ -101,6 +118,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			numRandom = (int) (Math.random()*selecCountMates());
+			selecEcuacioMates(numRandom);
 		}
 		return ecuacio;
 	}
@@ -116,6 +135,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			numRandom = (int) (Math.random()*(selecCountIngles()-(selecCountMates()+1)+1)+(selecCountMates()+1));
+			selecEcuacioMates(numRandom);
 		}
 		return enunciado;
 	}
@@ -226,5 +247,34 @@ public class Selects {
 		}
 	}
 	
+	public ArrayList<String> selecNomsPartida(int idPartida) {
+		ArrayList<String> nombres = new ArrayList<String>();
+		try {
+			stmt = conexion.createStatement();
+			rs = stmt.executeQuery("SELECT nombreJugador FROM JUEGAN WHERE idPartida = " + idPartida);
+			for(int i=0;rs.next();i++) {
+				nombres.add(rs.getString(1));
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nombres;
+	}
 	
+	
+	public int selecMaxIngles() {
+		int idUltimaPartida = 0;
+		try {
+			stmt = conexion.createStatement();
+			rs = stmt.executeQuery("SELECT MAX(idIngles) FROM INGLES");
+			rs.next();
+			idUltimaPartida = rs.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idUltimaPartida;
+	}
+
 }
