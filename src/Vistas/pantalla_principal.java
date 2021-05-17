@@ -37,6 +37,7 @@ public class pantalla_principal extends JFrame {
 				try {
 					pantalla_principal frame = new pantalla_principal();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,6 +49,7 @@ public class pantalla_principal extends JFrame {
 	 * Create the frame.
 	 */
 	public pantalla_principal() {
+		
 		setTitle("principal_grup3");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 398, 430);
@@ -116,6 +118,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				pantalla_jugar_selecciojugadors pSelec = new pantalla_jugar_selecciojugadors();
 				pSelec.setVisible(true);
+				pSelec.setLocationRelativeTo(null);
 
 			}
 		});
@@ -156,6 +159,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				 informes informe = new informes();
 				informe.setVisible(true);
+				informe.setLocationRelativeTo(null);
 				dispose();
 			}
 		});
@@ -196,6 +200,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				historic h = new historic();
 				h.setVisible(true);
+				h.setLocationRelativeTo(null);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
@@ -233,6 +238,7 @@ public class pantalla_principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				pantalla_jugadors pj = new pantalla_jugadors();
 				pj.setVisible(true);
+				pj.setLocationRelativeTo(null);
 			}
 		});
 		btnNewButton_3.setBackground(Color.WHITE);

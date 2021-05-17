@@ -5,19 +5,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 import BDD.Inserts;
 import BDD.Selects;
 import BDD.conexionBD;
+import Vistas.pantalla_jugadors;
 import Vistas.pantalla_preguntes_ingles;
 import Vistas.pantalla_preguntes_lletres;
 import Vistas.pantalla_preguntes_mates;
@@ -28,6 +32,7 @@ import Vistas.ranquingFinal;
 import Vistas.selecRonda;
 
 public class Partida {
+	static int numRondas;
 	static int rondaActual = 0;
 	private ArrayList<String> numsJugadors = new ArrayList<String>();
 	static ArrayList<Integer> alreadyUsedNumbers = new ArrayList<>();
@@ -42,21 +47,23 @@ public class Partida {
 	public static boolean aux = false, esCPU = false;
 	public static Inserts inser = new Inserts();
 	public static Selects selec = new Selects();
-	int maxCPU = 0;
-	static int contadorCPU = 0;
+	static int maxCPU = 0, contadorCPU = 0;
 	static conexionBD bdd = new conexionBD();
 	static Connection conexion = bdd.obtenerConexion();
-	static ArrayList<Integer> puntos = new ArrayList<Integer>();
+	static ArrayList<Integer> puntos = new ArrayList<Integer>(), puntosCPU = new ArrayList<Integer>();
 		
 	public Partida(int numRondas, int numJugador, String[] nombreJugadores, int contadorCPU) {			
-			numeroDeJugadores = numJugador;
+			numeroDeJugadores = numJugador - contadorCPU;
 			numeroDeRondas = numRondas;
-			//this.maxCPU = contadorCPU;
+			maxCPU = contadorCPU;
 			
 			inser.inserPartida();
+			inser.commit();
 			idUltimaPartida = selec.selecMaxPartida();
-			
+			System.out.println(contadorCPU);
+			System.out.println(nombreJugadores.length);
 			int i = 0;
+			this.numRondas = numRondas;
 			
 			while (alreadyUsedNumbers.size()<nombreJugadores.length) {
 				
@@ -87,7 +94,7 @@ public class Partida {
 				}
 				puntos.add(0);
 			}
-			for (int j = 0; j < this.maxCPU; j++) {
+			for (int j = 0; j < maxCPU; j++) {
 				if (j == 0) {
 					CPU1 = "CPU1";
 				}else if(j == 1) {
@@ -99,6 +106,7 @@ public class Partida {
 				}else {
 					CPU5 = "CPU5";
 				}
+				puntosCPU.add(0);
 			}
 			
 				pasarRondas();
@@ -146,20 +154,24 @@ public class Partida {
 					String correcto = selec.selecPalabraCompleta("aa");
 					pregunta_incorrecte pi = new pregunta_incorrecte(correcto, nombre);
 					pi.setVisible(true);
+					pi.setLocationRelativeTo(null);
 				}else {
 					numRandom = (int) (Math.random()*(cantIdLetras-(cantIdIngles+1)+1)+(cantIdIngles+1));
 					pantalla_preguntes_lletres pL = new pantalla_preguntes_lletres(numRandom, nombre);
 					pL.setVisible(true);
+					pL.setLocationRelativeTo(null);
 				}
 			}
 			else if(pregunta == 1) {
 				if(esCPU) {
 					pregunta_correcte pc = new pregunta_correcte(nombre);
 					pc.setVisible(true);
+					pc.setLocationRelativeTo(null);
 				}else {
 					numRandom = (int) (Math.random()*cantIdMates);
 					pantalla_preguntes_mates pM = new pantalla_preguntes_mates(numRandom, nombre);
 					pM.setVisible(true);
+					pM.setLocationRelativeTo(null);
 				}
 			}
 			else{
@@ -169,14 +181,17 @@ public class Partida {
 						String correcto = selec.selecRespuestasCorrectaIngles("hola");
 						pregunta_incorrecte pi = new pregunta_incorrecte(correcto, nombre);
 						pi.setVisible(true);
+						pi.setLocationRelativeTo(null);
 					}else {
 						pregunta_correcte pc = new pregunta_correcte(nombre);
 						pc.setVisible(true);
+						pc.setLocationRelativeTo(null);
 					}
 				}else {
 					numRandom = (int) (Math.random()*(cantIdIngles-(cantIdMates+1)+1)+(cantIdMates+1));
 					pantalla_preguntes_ingles pI = new pantalla_preguntes_ingles(numRandom, nombre);
 					pI.setVisible(true);
+					pI.setLocationRelativeTo(null);
 				}
 			}
 		}
@@ -184,20 +199,21 @@ public class Partida {
 		public void pasarRondas(){		
 			selecRonda rondaElegir = new selecRonda();
 			rondaElegir.setVisible(true);
+			rondaElegir.setLocationRelativeTo(null);
 			hilo1 = new Thread(rondaElegir);
 			hilo1.start();
 		}
 		
 		public void sumarPuntos(boolean respuesta) {
-			int punto = 0;
-			if (respuesta) {
-				punto = 1;
-				int puntoAnterior=puntos.get(jugadoresJugado-1) + 1;
-				puntos.set(jugadoresJugado-1, puntoAnterior);
-			}else
-				punto = 0;
-			String nombre = null;
 			if(!esCPU) {		
+				int punto = 0;
+				if (respuesta) {
+					punto = 1;
+					int puntoAnterior=puntos.get(jugadoresJugado-1);
+					puntoAnterior++;
+					puntos.set(jugadoresJugado-1, puntoAnterior);
+				}
+				String nombre = null;
 				if (jugadoresJugado == 1) {
 					nombre = nombre1;
 				}else if(jugadoresJugado == 2) {
@@ -216,13 +232,23 @@ public class Partida {
 					aux = true;
 				}
 				inser.insertJuegan(rondaActual+1, idUltimaPartida, nombre, numRandom, punto, respuesta);
+			}else {
+				int punto = 0;
+				if (respuesta) {
+					punto = 1;
+					int puntoAnterior=puntosCPU.get(contadorCPU-1);
+					puntoAnterior++;
+					puntos.set(contadorCPU-1, puntoAnterior);
+				}
 			}
 			
 			if (jugadoresJugado == numeroDeJugadores) {
 				if(jugadoresJugado == numeroDeJugadores && contadorCPU != maxCPU) {
 					esCPU = true;
-				}else
+				}else {
+					contadorCPU = 0;
 					esCPU = false;
+				}
 				if(esCPU) {	
 					jugarCPU();
 				}
@@ -231,8 +257,9 @@ public class Partida {
 					rondaActual++;
 					aux = false;
 					if(rondaActual != numeroDeRondas) {
-						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos);
+						ranquing r = new ranquing(numeroDeJugadores, idUltimaPartida, nombre1, nombre2, nombre3, nombre4, nombre5, nombre6, puntos, puntosCPU, CPU1, CPU2, CPU3, CPU4, CPU5);
 						r.setVisible(true);
+						r.setLocationRelativeTo(null);
 					}
 				}
 			}
@@ -253,6 +280,7 @@ public class Partida {
 				ranquingFinal rf = null;
 				rf = new ranquingFinal(numeroDeJugadores, idUltimaPartida);
 				rf.setVisible(true);
+				rf.setLocationRelativeTo(null);
 			}
 			if(!esCPU)
 				jugadoresJugado++;
@@ -285,30 +313,29 @@ public class Partida {
 
     public static Map<String, Integer> getPuntuacions() throws SQLException{
         String nom;
-        ArrayList<String> nombres = new ArrayList<String>();
         int puntuacio;
         Statement stmt = conexion.createStatement();
-        nombres = selec.selecNomsPartida(idUltimaPartida);
+        Statement stmt22 = conexion.createStatement();
+        ResultSet stmt2 = null;
+        ResultSet set = stmt.executeQuery("SELECT nombreJugador FROM JUEGAN WHERE idPartida = " + idUltimaPartida);
        
         Map<String, Integer> Puntuacions = new HashMap<String, Integer>();
 
-        for(int i=0;i<nombres.size();i++) {
-            nom =  nombres.get(i);
-            puntuacio = selec.sumPuntos(idUltimaPartida, nom);
+        for(int i=0;set.next();i++) {
+            nom =  set.getString(1);
+            stmt2 = stmt22.executeQuery("SELECT SUM(puntos) FROM JUEGAN WHERE nombreJugador = '" + nom + "' && idPartida = " + idUltimaPartida);
+            stmt2.next();
+            puntuacio = stmt2.getInt(1);
             Puntuacions.put(nom, puntuacio);
         }
         return Puntuacions;
     }
     
     public void jugarCPU() {
-   		if(contadorCPU == maxCPU) {
-   			esCPU = false;
-   			contadorCPU = 0;
-   		}
-   		else {
-   			contadorCPU++;
-    		pasarRondas();
-    	}    			
+   		
+   		contadorCPU++;
+    	pasarRondas();
+    	   			
     }
     
     public void rollBack() {

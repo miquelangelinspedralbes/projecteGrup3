@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 
 public class Selects {
+	static int numRandom;
 	public ArrayList<String> nombre = new ArrayList<String>();
 	public ArrayList<Integer> puntos = new ArrayList<Integer>();
 	
@@ -101,6 +102,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			numRandom = (int) (Math.random()*(selecCountLetras()-(selecCountIngles()+1)+1)+(selecCountIngles()+1));
+			selecEcuacioMates(numRandom);
 		}
 		return oculta;
 	}
@@ -115,7 +118,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			selecEcuacioMates(numRand+1);
+			numRandom = (int) (Math.random()*selecCountMates());
+			selecEcuacioMates(numRandom);
 		}
 		return ecuacio;
 	}
@@ -131,7 +135,8 @@ public class Selects {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			selecEnunciadoIngles(numRand+1);
+			numRandom = (int) (Math.random()*(selecCountIngles()-(selecCountMates()+1)+1)+(selecCountMates()+1));
+			selecEcuacioMates(numRandom);
 		}
 		return enunciado;
 	}

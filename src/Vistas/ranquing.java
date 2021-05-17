@@ -40,11 +40,13 @@ public class ranquing extends JFrame {
 
 	private JPanel contentPane;
 	public Integer totaljugadors;
+	static conexionBD bd = new conexionBD();
+	static Connection conexion = bd.obtenerConexion();
 	Selects selec = new Selects();
 	/**
 	 * Create the frame.
 	 */
-	public ranquing(int numJugadores, int idUltimaPartida, String nombre1, String nombre2, String nombre3, String nombre4, String nombre5, String nombre6, ArrayList<Integer> puntos) {
+	public ranquing(int numJugadores, int idUltimaPartida, String nombre1, String nombre2, String nombre3, String nombre4, String nombre5, String nombre6, ArrayList<Integer> puntos, ArrayList<Integer> puntosCPU, String CPU1, String CPU2, String CPU3, String CPU4, String CPU5) {
 		totaljugadors = numJugadores;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 359, 362);
@@ -325,6 +327,264 @@ public class ranquing extends JFrame {
 			puntosjug1.setText(String.valueOf(puntos.get(0)));
 			posicio2.setVisible(true);
 			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre2)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre3)));
+			posicio4.setVisible(true);
+			nomjug4.setText(nombre4);
+			puntosjug4.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre4)));
+			posicio5.setVisible(true);
+			nomjug5.setText(nombre5);
+			puntosjug5.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre5)));
+			posicio6.setVisible(true);
+			nomjug6.setText(nombre6);
+			puntosjug6.setText(String.valueOf(selec.sumPuntos(idUltimaPartida, nombre6)));
+		}
+		if(puntosCPU.size() == 1 && totaljugadors.equals(1)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			
+			posicio2.setVisible(true);
+			nomjug2.setText(CPU1);
+			puntosjug2.setText(String.valueOf(puntosCPU.get(0)));
+			posicio3.setVisible(false);
+			posicio4.setVisible(false);
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 2 && totaljugadors.equals(1)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			
+			posicio2.setVisible(true);
+			nomjug2.setText(CPU1);
+			puntosjug2.setText(String.valueOf(puntosCPU.get(0)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU2);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(1)));
+			posicio4.setVisible(false);
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 3 && totaljugadors.equals(1)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			
+			posicio2.setVisible(true);
+			nomjug2.setText(CPU1);
+			puntosjug2.setText(String.valueOf(puntosCPU.get(0)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU2);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(1)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU3);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(2)));
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 4 && totaljugadors.equals(1)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			
+			posicio2.setVisible(true);
+			nomjug2.setText(CPU1);
+			puntosjug2.setText(String.valueOf(puntosCPU.get(0)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU2);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(1)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU3);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(2)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU4);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(3)));
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 5 && totaljugadors.equals(1)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(CPU1);
+			puntosjug2.setText(String.valueOf(puntosCPU.get(0)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU2);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(1)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU3);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(2)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU4);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(3)));
+			posicio6.setVisible(true);
+			nomjug6.setText(CPU5);
+			puntosjug6.setText(String.valueOf(puntosCPU.get(4)));
+			
+		}else if(puntosCPU.size() == 1 && totaljugadors.equals(2)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU1);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(0)));
+			posicio4.setVisible(false);
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+			
+		}else if(puntosCPU.size() == 2 && totaljugadors.equals(2)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU1);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(0)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU2);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(1)));
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 3 && totaljugadors.equals(2)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU1);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(0)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU2);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(1)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU3);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(2)));
+			posicio6.setVisible(false);
+		}else if(puntosCPU.size() == 4 && totaljugadors.equals(2)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(CPU1);
+			puntosjug3.setText(String.valueOf(puntosCPU.get(0)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU2);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(1)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU3);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(2)));
+			posicio6.setVisible(true);
+			nomjug6.setText(CPU4);
+			puntosjug6.setText(String.valueOf(puntosCPU.get(3)));
+			
+		}else if(puntosCPU.size() == 1 && totaljugadors.equals(3)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU1);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(0)));
+			posicio5.setVisible(false);
+			posicio6.setVisible(false);
+			
+		}else if(puntosCPU.size() == 2 && totaljugadors.equals(3)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU1);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(0)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU2);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(1)));
+			posicio6.setVisible(false);
+			
+		}else if(puntosCPU.size() == 3 && totaljugadors.equals(3)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
+			posicio4.setVisible(true);
+			nomjug4.setText(CPU1);
+			puntosjug4.setText(String.valueOf(puntosCPU.get(0)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU2);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(1)));
+			posicio6.setVisible(true);
+			nomjug6.setText(CPU3);
+			puntosjug6.setText(String.valueOf(puntosCPU.get(2)));
+			
+		}else if(puntosCPU.size() == 1 && totaljugadors.equals(4)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
+			posicio4.setVisible(true);
+			nomjug4.setText(nombre4);
+			puntosjug4.setText(String.valueOf(puntos.get(3)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU1);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(0)));
+			posicio6.setVisible(false);
+			
+		}else if(puntosCPU.size() == 2 && totaljugadors.equals(4)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
+			puntosjug2.setText(String.valueOf(puntos.get(1)));
+			posicio3.setVisible(true);
+			nomjug3.setText(nombre3);
+			puntosjug3.setText(String.valueOf(puntos.get(2)));
+			posicio4.setVisible(true);
+			nomjug4.setText(nombre4);
+			puntosjug4.setText(String.valueOf(puntos.get(3)));
+			posicio5.setVisible(true);
+			nomjug5.setText(CPU1);
+			puntosjug5.setText(String.valueOf(puntosCPU.get(0)));
+			posicio6.setVisible(true);
+			nomjug6.setText(CPU2);
+			puntosjug6.setText(String.valueOf(puntosCPU.get(1)));
+			
+		}else if(puntosCPU.size() == 1 && totaljugadors.equals(5)) {
+			posicio1.setVisible(true);
+			nomjug1.setText(nombre1);
+			puntosjug1.setText(String.valueOf(puntos.get(0)));
+			posicio2.setVisible(true);
+			nomjug2.setText(nombre2);
 			puntosjug2.setText(String.valueOf(puntos.get(1)));
 			posicio3.setVisible(true);
 			nomjug3.setText(nombre3);
@@ -336,9 +596,11 @@ public class ranquing extends JFrame {
 			nomjug5.setText(nombre5);
 			puntosjug5.setText(String.valueOf(puntos.get(4)));
 			posicio6.setVisible(true);
-			nomjug6.setText(nombre6);
-			puntosjug6.setText(String.valueOf(puntos.get(5)));
+			nomjug6.setText(CPU2);
+			puntosjug6.setText(String.valueOf(puntosCPU.get(1)));
+			
 		}
+		
 		
 		addWindowListener((WindowListener) new WindowAdapter() {
 			   public void windowClosing(WindowEvent e) {

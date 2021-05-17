@@ -39,36 +39,79 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class historic extends JFrame {
 
 	private JPanel contentPane;
 	String text = null;
+	
+	
 
 	public historic() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 358, 300);
+		setBounds(100, 100, 358, 292);
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setBackground(Color.DARK_GRAY);
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(0, 80, 345, 193);
-		textArea.setBackground(Color.DARK_GRAY);
-		textArea.setForeground(Color.WHITE);
 		text = readFile();
-		textArea.append(text);
-		contentPane.add(textArea);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{345, 0};
+		gbl_contentPane.rowHeights = new int[]{48, 153, 40, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblhistoric = new JLabel("Hist\u00F2ric");
 		lblhistoric.setForeground(Color.RED);
-		lblhistoric.setFont(new Font("Dialog", Font.BOLD, 19));
-		lblhistoric.setBounds(134, 22, 80, 25);
-		contentPane.add(lblhistoric);
+		lblhistoric.setFont(new Font("Dialog", Font.BOLD, 25));
+		GridBagConstraints gbc_lblhistoric = new GridBagConstraints();
+		gbc_lblhistoric.fill = GridBagConstraints.VERTICAL;
+		gbc_lblhistoric.insets = new Insets(0, 0, 5, 0);
+		gbc_lblhistoric.gridx = 0;
+		gbc_lblhistoric.gridy = 0;
+		contentPane.add(lblhistoric, gbc_lblhistoric);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setMargin(new Insets(30, 80, 0, 0));
+		textArea.setEditable(false);
+		textArea.setBackground(Color.DARK_GRAY);
+		textArea.setForeground(Color.WHITE);
+		textArea.append(text);
+		GridBagConstraints gbc_textArea = new GridBagConstraints();
+		gbc_textArea.insets = new Insets(0, 0, 5, 0);
+		gbc_textArea.fill = GridBagConstraints.BOTH;
+		gbc_textArea.gridx = 0;
+		gbc_textArea.gridy = 1;
+		contentPane.add(textArea, gbc_textArea);
+		
+		JButton btnTornar = new JButton("");
+		btnTornar.setIcon(new ImageIcon(historic.class.getResource("/img/return24.png")));
+		btnTornar.setForeground(Color.RED);
+		btnTornar.setBackground(Color.WHITE);
+		btnTornar.addActionListener(new ActionListener() 
+		{
+		    public void actionPerformed(ActionEvent e) {
+		    pantalla_principal pp = new pantalla_principal();
+		    pp.setVisible(true);
+		    pp.setLocationRelativeTo(null);
+		        dispose();
+		    }
+		});
+		GridBagConstraints gbc_btnTornar = new GridBagConstraints();
+		gbc_btnTornar.fill = GridBagConstraints.BOTH;
+		gbc_btnTornar.gridx = 0;
+		gbc_btnTornar.gridy = 2;
+		contentPane.add(btnTornar, gbc_btnTornar);
 
 	}
 	

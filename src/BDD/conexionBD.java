@@ -25,7 +25,7 @@ public class conexionBD {
         try {
             Class.forName(CONTROLADOR);
             conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("Conexión OK");
+            System.out.println("Conexiï¿½n OK");
             try {
             	introducirMates(conexion, 15);
 				introducirIngles(conexion);
@@ -40,7 +40,7 @@ public class conexionBD {
             e.printStackTrace();
 
         } catch (SQLException e) {
-            System.out.println("Error en la conexión");
+            System.out.println("Error en la conexiï¿½n");
             e.printStackTrace();
         }
         
@@ -202,13 +202,13 @@ public class conexionBD {
     	 try {
              Class.forName(CONTROLADOR);
              conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-             System.out.println("Conexión OK");
+             System.out.println("Conexiï¿½n OK");
          } catch (ClassNotFoundException e) {
              System.out.println("Error al cargar el controlador");
              e.printStackTrace();
 
          } catch (SQLException e) {
-             System.out.println("Error en la conexión");
+             System.out.println("Error en la conexiï¿½n");
              e.printStackTrace();
          }
     	 return conexion;

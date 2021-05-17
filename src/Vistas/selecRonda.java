@@ -86,7 +86,7 @@ public class selecRonda extends JFrame implements Runnable{
 	}
 	
 	public void run() {
-		int vel = 500;
+		int vel = 1 *1000;
 		
 		TimerTask tarea = null;
 		Timer tiempo = new Timer();
@@ -141,7 +141,7 @@ public class selecRonda extends JFrame implements Runnable{
 							lblNewLabel_1.setText("Matematicas");
 							contador = 1;
 						}
-						Thread.sleep(500);
+						Thread.sleep(1500);
 						i = 0;
 						dispose();
 						Partida p = new Partida();
